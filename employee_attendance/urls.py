@@ -19,7 +19,8 @@ urlpatterns = [
     path('reports/', include('reports.urls', namespace='reports')),
 
     # ✅ Fix: Explicitly define app_name before including two_factor.urls
-    path('account/', include(('two_factor.urls', 'two_factor'), namespace='two_factor')),
+    path('account/', include('two_factor.urls', namespace='two_factor')),
+
 ]
 
 handler404 = custom_404_view
