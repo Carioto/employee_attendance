@@ -1,1 +1,1 @@
-web: gunicorn emp_attendance.wsgi --log-file -
+web: gunicorn employee_attendance.wsgi --log-file -
