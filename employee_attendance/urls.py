@@ -8,7 +8,6 @@ from django.conf.urls import handler404
 from accounts.views import custom_404_view  # Import the 404 view
 
 urlpatterns = [
-    # Redirect base URL to a suitable page
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('welcome/', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
@@ -19,8 +18,8 @@ urlpatterns = [
     path('restaurants/', include('restaurants.urls', namespace='restaurants')),
     path('reports/', include('reports.urls', namespace='reports')),
 
-    # ✅ Corrected Two-Factor Authentication URL
-    path('account/', include('two_factor.urls', namespace='two_factor')),
+    # ✅ Fix: Explicitly define app_name before including two_factor.urls
+    path('account/', include(('two_factor.urls', 'two_factor'), namespace='two_factor')),
 ]
 
 handler404 = custom_404_view
