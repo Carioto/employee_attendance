@@ -7,7 +7,7 @@ from django.conf.urls import handler404
 from accounts.views import custom_404_view  # Import the 404 view
 
 urlpatterns = [
-    # Redirect base URL to a suitable page
+    path('', lambda request: redirect('login', permanent=False)),  # ✅ Redirect / to /login/
     path('login/', LoginView.as_view(template_name="registration/login.html"), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('welcome/', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
