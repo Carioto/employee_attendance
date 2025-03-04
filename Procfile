@@ -1,0 +1,1 @@
+web: gunicorn emp_attendance.wsgi --log-file -

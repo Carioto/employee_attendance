@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Employee Attendance Tracking{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mystyles.css' %}">
+    {% block styles %}{% endblock %}    
+</head>
+<body class="bg-white text-black text-xl dark:bg-black dark:text-white p-6">
+    <header class="">
+        <h1>Employee Attendance Tracking</h1>
+    </header>
+    <nav class="border bg-gray-800">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-2">
+          <div class="relative flex h-16 items-center justify-between">
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+              <div class="flex shrink-0 items-center">
+                <img src="{% static 'images/symbol1_transparent.png' %}" alt="Site Logo" class="h-10" />
+              </div>
+              <div class="hidden sm:ml-6 sm:block">
+                <div class="flex space-x-4">
+                  {% if user.is_authenticated %}
+                    {% if user.role == 'superuser' or user.role == 'dm' %}
+                      <a href="{% url 'restaurants:restaurant_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Restaurants</a>
+                      <a href="{% url 'attendance:record_entry' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Attendance</a>
+                      <a href="{% url 'restaurants:employee_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Employees</a>
+                      <a href="{% url 'reports:reports_home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
+
+                    {% elif user.role == 'gm' %}
+                      <a href="{% url 'attendance:record_entry' %}" class="rounded-md hover:bg-gray-700 px-3 py-2 text-sm font-medium text-white">Attendance</a>
+                      <a href="{% url 'restaurants:employee_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Employees</a>
+                      <a href="{% url 'reports:reports_home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
+                    {% elif user.role == 'manager' %}
+                      <a href="{% url 'attendance:record_entry' %}" class="rounded-md hover:bg-gray-700 px-3 py-2 text-sm font-medium text-white">Attendance</a>
+                      <a href="{% url 'reports:reports_home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
+                    {% endif %}
+                    <form action="{% url 'logout' %}" method="post" class="inline">
+                      {% csrf_token %}
+                      <button type="submit" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">
+                        Logout
+                      </button>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% if user.is_authenticated %}
+              <span class="ml-auto text-sm font-medium text-gray-300">logged in as {{ user.first_name }} {{user.last_name}}</span>
+              {% endif %}
+            </div>
+        </div>
+      </nav>
+      
+      
+    <main class="mx-auto w-full items-center p-6">
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+      <div class="fixed bottom-0 left-0 right-0 h-10 flex justify-center items-center bg-gray-800">
+        <img src="{% static 'images/logo.png' %}" alt="Site Logo" class="footimg mr-2 h-10" />
+        <span class="footnote text-white">
+          This app created by David Carioto
+        </span>
+      </div>
+    </footer>
+    
+    <div id="gmModal" class="fixed top-0 right-0 left-0 bottom-0 inset-0 z-50 flex items-center justify-center hidden">
+      <div class="bg-gray-800 p-6 rounded-lg w-11/12 max-w-lg">
+        <h3 class="text-xl font-bold mb-4">
+          Assign GM to <span id="modalRestaurantName"></span>
+        </h3>
+        <form id="assignGmForm" method="post" action="{% url 'restaurants:assign_gm' %}">
+          {% csrf_token %}
+          <input type="hidden" name="restaurant_id" id="modalRestaurantId">
+          <div class="mb-4">
+            <label for="gmSelect" class="block mb-1">Select GM:</label>
+            <select name="gm_id" id="gmSelect" class="w-full p-2 border rounded text-black">
+              <option class="text-black" value="">None</option> <!-- Option for no GM -->
+              {% for gm in gms %}
+              <option class="text-black" value="{{ gm.id }}">{{ gm.first_name }} {{ gm.last_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="flex justify-end">
+            <button type="button" id="modalCancelButton" class="mr-2 px-3 py-2 bg-gray-500 text-white rounded">Cancel</button>
+            <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+  <h1>Employee List</h1>
+  <div class="p-3 flex justify-center">
+    <a class="button" href="{% url 'restaurants:employee_create' %}">Add New Employee</a>
+  </div>
+  <table class="w-2/3">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 dark:border-gray-600">First Name</th>
+        <th class="border border-gray-300 dark:border-gray-600">Last Name</th>
+        <th class="border border-gray-300 dark:border-gray-600">Restaurant</th>
+        <th class="border border-gray-300 dark:border-gray-600">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees %}
+      <tr>
+        <td class="border border-gray-300 dark:border-gray-700 text-center">{{ employee.first_name }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 text-center">{{ employee.last_name }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 text-center">{{ employee.restaurant }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 text-center">
+          <a class="btn btn-sm btn-primary text-blue-500" href="{% url 'restaurants:employee_update' employee.pk %}">Edit</a>
+          ---
+          <a class="btn btn-sm btn-danger text-red-500" href="{% url 'restaurants:employee_delete' employee.pk %}">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3">No employees found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

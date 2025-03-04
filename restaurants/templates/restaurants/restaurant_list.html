@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center">
+  <h1>Restaurants</h1>
+  <table class="w-3/4 mx-auto table-auto border-separate border-spacing-2 border border-gray-400 dark:border-gray-500">
+    <thead>
+      <tr>
+        <th class="border border-gray-300 dark:border-gray-600">Name</th>
+        <th class="border border-gray-300 dark:border-gray-600">Address</th>
+        <th class="border border-gray-300 dark:border-gray-600">Assigned GM</th>
+        <th class="border border-gray-300 dark:border-gray-600">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for restaurant in restaurants %}
+      <tr>
+        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.name }}</td>
+        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.address }}</td>
+        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.gm|default:"None" }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 text-center">
+          <button type="button"
+            class="assign-gm-button button mb-3"
+            data-restaurant-id="{{ restaurant.id }}"
+            data-restaurant-name="{{ restaurant.name }}"
+            data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">
+            Assign / Edit GM
+          </button>        
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No restaurants found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    const modal = document.getElementById('gmModal');
+    const modalRestaurantName = document.getElementById('modalRestaurantName');
+    const modalRestaurantId = document.getElementById('modalRestaurantId');
+    const gmSelect = document.getElementById('gmSelect');
+    const cancelButton = document.getElementById('modalCancelButton');
+
+    // When any button with class assign-gm-button is clicked, open the modal
+    document.querySelectorAll('.assign-gm-button').forEach(function(button){
+        button.addEventListener('click', function(){
+            const restaurantId = button.getAttribute('data-restaurant-id');
+            const restaurantName = button.getAttribute('data-restaurant-name');
+            const assignedGmId = button.getAttribute('data-restaurant-gm'); // New data attribute
+
+            modalRestaurantId.value = restaurantId;
+            modalRestaurantName.textContent = restaurantName;
+            
+            // Set the default selected GM in the dropdown
+            if (assignedGmId && assignedGmId !== "None") {
+                gmSelect.value = assignedGmId;
+            } else {
+                gmSelect.value = ""; // Default to "None" if no GM assigned
+            }
+
+            modal.classList.remove('hidden');
+        });
+    });
+
+    // Close the modal when cancel button is clicked
+    cancelButton.addEventListener('click', function(){
+        modal.classList.add('hidden');
+    });
+});
+
+</script>
+{% endblock %}

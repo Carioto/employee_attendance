@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto p-4">
+  <h1>Attendance for {{ selected_date }}</h1>
+  
+  {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
+  <!-- Date picker for GM and above -->
+  <form method="get" class="mb-4 text-center">
+    <label for="date" class="block mb-1">Select Date:</label>
+    <input type="date" name="date" id="date" value="{{ selected_date }}" class="border p-1">
+    <button type="submit" class="button">Go</button>
+  </form>
+  {% endif %}
+
+  <form method="post" class="p-4">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table class="w-3/4">
+      <thead>
+        <tr>
+          <th class="border p-2">Employee Name</th>
+          <th class="border p-2">Attendance Code</th>
+          <th class="border p-2">Comment(optional)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for form, employee in form_employee %}
+        <tr>
+          <td class="border p-2 text-center dark:text-white">{{ employee.first_name }} {{ employee.last_name }}</td>
+          <td class="border p-2 text-center text-red-500 font-bold">{{ form.code }}</td>
+          <td class="border p-2 text-center text-red-500 font-bold">{{ form.comment }}</td>
+          <input type="hidden" name="form-{{ forloop.counter0 }}-employee_id" value="{{ employee.id }}">
+        </tr>
+        {% endfor %}
+      </tbody>
+      
+    </table>
+    <div class="p-3 text-center mx-auto">
+      <button type="submit" class="button">Save Attendance</button>
+    </div>
+  </form>
+  <div class="mt-8 ">
+    <table class="text-center w-1/2">
+      <thead>
+        <tr>
+          <th class="border px-2 py-1 bg-gray-200 text-black">Code</th>
+          <th class="border px-2 py-1 bg-gray-200 text-black">Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="border px-2 py-1">NS</td>
+          <td class="border px-2 py-1">No Show</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">CO</td>
+          <td class="border px-2 py-1">Called Off with at least 2 hours notice</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">LCO</td>
+          <td class="border px-2 py-1">Called Off without 2 hours notice</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">L</td>
+          <td class="border px-2 py-1">Late (more than 10 minutes) with notification</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">LNN</td>
+          <td class="border px-2 py-1">Late (more than 10 minutes) without notifying restaurant</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">XL</td>
+          <td class="border px-2 py-1">More than 30 minutes regardless of notifying restaurant</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">P</td>
+          <td class="border px-2 py-1">Showed for scheduled shift no more than 5 minutes late</td>
+        </tr>
+        <tr>
+          <td class="border px-2 py-1">HRO</td>
+          <td class="border px-2 py-1">Off but came in / Adjustmented shift to support restaurant</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+{% endblock %}
