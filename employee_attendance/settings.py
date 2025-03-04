@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z+3ev72$ng^&-_@@%$dn^nfx4a2f4$ql99cbulb3o*ick-=!37'
 
 
-ALLOWED_HOSTS = ["emp_attendance.herokuapp.com", "localhost"]
+ALLOWED_HOSTS = ["emp_attendance.herokuapp.com", "localhost","127.0.0.1"]
 
 
 # Application definition
@@ -41,11 +41,6 @@ INSTALLED_APPS = [
     'restaurants',
     'attendance',
     'reports',
-    # Two-factor authentication apps:
-    'django_otp',
-    'django_otp.plugins.otp_static',
-    'django_otp.plugins.otp_totp',
-    'two_factor',
     'tailwind',
     'theme'
 ]
@@ -151,9 +146,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_URL = 'two_factor:login'
+LOGIN_URL = 'login'
 
-LOGOUT_REDIRECT_URL = '/account/login/'
+LOGOUT_REDIRECT_URL = 'login'
 
 LOGIN_REDIRECT_URL = '/welcome/'
 
