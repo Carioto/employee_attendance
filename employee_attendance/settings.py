@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z+3ev72$ng^&-_@@%$dn^nfx4a2f4$ql99cbulb3o*ick-=!37'
 
 
-ALLOWED_HOSTS = ["emp_attendance.herokuapp.com", "localhost","127.0.0.1"]
+ALLOWED_HOSTS = ["emp-attendance-d47a9af5aa54.herokuapp.com", "localhost","127.0.0.1"]
 
 
 # Application definition
