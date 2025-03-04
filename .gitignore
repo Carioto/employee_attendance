@@ -1,0 +1,48 @@
+# Byte-compiled / cached
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+*.env
+*.venv
+Pipfile
+Pipfile.lock
+
+# Django / Python logs
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+debug.log
+
+# Django secret settings (if using dotenv)
+.env
+.env.local
+.env.*.local
+
+# Migrations (should be tracked, but ignore cache)
+**/migrations/__pycache__/
+
+# Media / Static files
+media/
+staticfiles/
+*.sass-cache
+
+# VSCode / IDE files
+.vscode/
+.idea/
+*.swp
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Heroku-related
+*.procfile
