@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h1>Update Restaurant</h1>
+  <style>
+    /* This will apply to all input, select, and textarea fields within the form */
+    form input, form select, form textarea {
+      background-color: #000;
+      color: #fff;
+    }
+    </style>
+  <form method="post" class="text-center p-3">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="bg-sky-500 hover:bg-sky-700 rounded-xl p-1 mt-2">Save</button>
+    <a href="{% url 'restaurants:restaurant_list' %}" class="bg-sky-500 hover:bg-sky-700 rounded-xl p-1 items-center">Cancel</a>
+  </form>
+</div>
+{% endblock %}

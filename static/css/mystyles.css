@@ -1,0 +1,52 @@
+h1{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 2.25rem; /* Equivalent to text-4xl */
+    font-weight: 500; /* Equivalent to font-medium */
+    color: black;
+    text-decoration: underline;
+    padding: 0.75rem; /* Equivalent to p-3 */
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        color: white;
+    }
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: auto; /* Equivalent to table-auto */
+    border-collapse: separate; /* Equivalent to border-separate */
+    border-spacing: 0.5rem; /* Equivalent to border-spacing-2 (2 * 0.25rem = 0.5rem) */
+    border: 1px solid #9ca3af; /* Equivalent to border-gray-400 */
+    padding: 0.5rem; /* Equivalent to p-2 */
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        border-color: #6b7280; /* Equivalent to border-gray-500 */
+    }
+}
+#id_auth-username, #id_auth-password, #id_restaurant, #id_last_name,#id_first_name, #date {
+    background-color: #f7fafc; /* Tailwind's gray-100 */
+    color: #1a202c;            /* Tailwind's gray-900 */
+    border: 1px solid #cbd5e0; /* Tailwind's gray-300 */
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+  }
+
+ .button {
+    background-color: #0ea5e9; /* Equivalent to bg-sky-500 */
+    border-radius: 9999px; /* Equivalent to rounded-full */
+    padding-left: 0.75rem; /* Equivalent to pl-3 */
+    padding-right: 0.75rem; /* Equivalent to pr-3 */
+    padding-bottom: 0.25rem; /* Equivalent to pb-1 */
+    margin-top: 0.5rem; /* Equivalent to mt-2 */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+button:hover {
+    background-color: #0369a1; /* Equivalent to hover:bg-sky-700 */
+}
