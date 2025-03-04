@@ -9,14 +9,18 @@ from accounts.views import custom_404_view  # Import the 404 view
 
 urlpatterns = [
     # Redirect base URL to a suitable page
-    path('login/', LoginView.as_view(), name='login'),  # Ensure 2FA login is registered
+    path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('welcome/', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
     path('admin/', admin.site.urls),
+
+    # App URLs with namespaces
     path('attendance/', include('attendance.urls', namespace='attendance')),
     path('restaurants/', include('restaurants.urls', namespace='restaurants')),
-    path('', include('two_factor.urls')),
-    path('reports/', include('reports.urls', namespace='reports'))
+    path('reports/', include('reports.urls', namespace='reports')),
+
+    # ✅ Corrected Two-Factor Authentication URL
+    path('account/', include('two_factor.urls', namespace='two_factor')),
 ]
 
 handler404 = custom_404_view
