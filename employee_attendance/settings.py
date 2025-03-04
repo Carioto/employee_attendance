@@ -84,6 +84,12 @@ if "JAWSDB_URL" in os.environ:
     DATABASES = {
         "default": dj_database_url.config(default=os.getenv("JAWSDB_URL"), conn_max_age=600)
     }
+
+    # Explicitly enable MySQL strict mode
+    DATABASES["default"]["OPTIONS"] = {
+        "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
+    }
+
 else:
     DATABASES = {
         'default': {
@@ -94,7 +100,7 @@ else:
             'HOST': 'localhost',  # or your database host
             'PORT': '5432',       # default PostgreSQL port
         }
-}
+    }
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
