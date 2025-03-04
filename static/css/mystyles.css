@@ -50,3 +50,20 @@ table{
 button:hover {
     background-color: #0369a1; /* Equivalent to hover:bg-sky-700 */
 }
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Style input fields */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #000;
+}
