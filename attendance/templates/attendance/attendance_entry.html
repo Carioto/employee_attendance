@@ -35,6 +35,10 @@
           <td class="border p-2 text-center text-red-500 font-bold">{{ form.comment }}</td>
           <input type="hidden" name="form-{{ forloop.counter0 }}-employee_id" value="{{ employee.id }}">
         </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="text-center">No employees found.</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
