@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container mx-auto p-4">
+<div class="container mx-auto p-2">
+  <div class="text-center relative">
+    <button onclick="toggleLegend()" class="button absolute top-0 right-5">Toggle Legend</button>
+  </div>
   <h1>Attendance for {{ selected_date }}</h1>
   
   {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
@@ -11,6 +14,7 @@
     <button type="submit" class="button">Go</button>
   </form>
   {% endif %}
+
 
   <form method="post" class="p-4">
     {% csrf_token %}
@@ -33,14 +37,14 @@
         </tr>
         {% endfor %}
       </tbody>
-      
     </table>
     <div class="p-3 text-center mx-auto">
       <button type="submit" class="button">Save Attendance</button>
     </div>
   </form>
-  <div class="mt-8 ">
-    <table class="text-center w-1/2">
+
+  <div id="legendContainer2" class="hidden">
+    <table class="text-center w-1/2 mx-auto">
       <thead>
         <tr>
           <th class="border px-2 py-1 bg-gray-200 text-black">Code</th>
@@ -78,11 +82,21 @@
         </tr>
         <tr>
           <td class="border px-2 py-1">HRO</td>
-          <td class="border px-2 py-1">Off but came in / Adjustmented shift to support restaurant</td>
+          <td class="border px-2 py-1">Off but came in / Adjusted shift to support restaurant</td>
         </tr>
       </tbody>
     </table>
   </div>
-  
+
+  <script>
+    function toggleLegend() {
+        var legend = document.getElementById("legendContainer2");
+        if (legend.classList.contains("hidden")) {
+            legend.classList.remove("hidden");
+        } else {
+            legend.classList.add("hidden");
+        }
+    }
+  </script>
 </div>
 {% endblock %}
