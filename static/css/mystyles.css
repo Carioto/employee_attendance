@@ -90,22 +90,55 @@ button:hover {
     color: #000;
 }
 
-/* General styles for larger screens remain unchanged */
-
 /* Mobile Screens (Phones) */
 @media (max-width: 600px) {
-    .navitems{
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Stack navbar items vertically */
+    .navitems {
         flex-direction: column;
+        align-items: center;
+        gap: 10px; /* Adds spacing between links */
     }
-    .navcont{
-        justify-items: center;
-        min-height: 164px;
-    }
-    .navbord{
-        width: 50% !important;
+
+    /* Ensure the navbar container is flexible */
+    .navcont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        max-width: 400px;
         margin-left: auto;
         margin-right: auto;
-
+        padding: 10px 0;
+        border-radius: 10px;
+        min-height: fit-content; /* Dynamically adjust height */
     }
 
+    /* Navbar border container */
+    .navbord {
+        width: 80% !important;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Fix link spacing */
+    .navitems a {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Remove bottom border from the last link */
+    .navitems a:last-child {
+        border-bottom: none;
+    }
 }
+
+
