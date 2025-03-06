@@ -6,13 +6,12 @@
     <title>{% block title %}Employee Attendance Tracking{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
     <link rel="stylesheet" href="{% static 'css/mystyles.css' %}">
-    {% block styles %}{% endblock %}    
 </head>
-<body class="bg-white text-black text-xl dark:bg-black dark:text-white p-6">
-    <header class="">
+<body>
+    <header class="text-center mx-auto">
         <h1>Employee Attendance Tracking</h1>
     </header>
-    <nav class="border bg-gray-800">
+    <nav class="border bg-gray-800 text-center">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-2">
           <div class="relative flex h-16 items-center justify-between">
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -56,7 +55,7 @@
       </nav>
       
       
-    <main class="mx-auto w-full items-center p-6">
+    <main>
         {% block content %}{% endblock %}
     </main>
     <footer>

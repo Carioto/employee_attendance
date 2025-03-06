@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center">
+<div class="text-center mx-auto">
   <h1>Employee List</h1>
-  <div class="p-3 flex justify-center">
+  <div class="pt-3 pb-4">
     <a class="button" href="{% url 'restaurants:employee_create' %}">Add New Employee</a>
   </div>
-  <table class="w-2/3">
+  <table class="emptable">
     <thead>
       <tr>
         <th class="border border-gray-300 dark:border-gray-600">First Name</th>

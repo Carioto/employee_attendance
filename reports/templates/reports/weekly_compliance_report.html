@@ -1,90 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Weekly Compliance Report</h1>
+<div class="mx-auto">
 
-<form method="GET" class="text-center p-3">
-    <label for="week">Select Week Beginning:</label>
-    <select name="week" id="week" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
-        {% for monday in mondays %}
+    <h1>Weekly Compliance Report</h1>
+    
+    <form method="GET" class="text-center p-3">
+        <label for="week">Select Week Beginning:</label>
+        <select name="week" id="week" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+            {% for monday in mondays %}
             <option class="p-1 text-red-500 font-bold" value="{{ monday }}" {% if monday == selected_week %} selected {% endif %}>{{ monday }}</option>
-        {% endfor %}
-    </select>
-</form>
-<div id="printableReport">
-    <h2 class="text-center">Weekly Compliance Report - Week Beginning {{ selected_week }}</h2>
-    <table class="w-full">
-        <thead>
-            <tr class="bg-gray-400 text-black">
-                <th>Employee</th>
-                <th>Weekly Compliance %</th>
-                <th>3-Month Point Total</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-                <th>Sunday</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for employee in employees %}
-            <tr>
-                <td class="border border-gray-400 p-2">{{ employee.name }}</td>
-                <td class="border border-gray-400 p-2 text-center">{{ employee.weekly_compliance }}%</td>
-                <td class="border border-gray-400 p-2 text-center">{{ employee.point_total }}</td>
-                {% for day in employee.codes.values %}
-                <td class="border border-gray-400 p-2 text-center relative">
-                    {{ day.code }}
-                    {% if day.comment %}
-                    <span class="ml-1 text-blue-500 cursor-pointer" title="{{ day.comment }}">&#9733;</span>
-                    {% endif %}
-                </td>
+            {% endfor %}
+        </select>
+    </form>
+    <div id="printableReport">
+        <h2 class="text-center">Weekly Compliance Report - Week Beginning {{ selected_week }}</h2>
+        <table class="w-full">
+            <thead>
+                <tr class="bg-gray-400 text-black">
+                    <th>Employee</th>
+                    <th>Weekly Compliance %</th>
+                    <th>3-Month Point Total</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td class="border border-gray-400 p-2">{{ employee.name }}</td>
+                    <td class="border border-gray-400 p-2 text-center">{{ employee.weekly_compliance }}%</td>
+                    <td class="border border-gray-400 p-2 text-center">{{ employee.point_total }}</td>
+                    {% for day in employee.codes.values %}
+                    <td class="border border-gray-400 p-2 text-center relative">
+                        {{ day.code }}
+                        {% if day.comment %}
+                        <span class="ml-1 text-blue-500 cursor-pointer" title="{{ day.comment }}">&#9733;</span>
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" class="p-2 text-center">No data available for this week.</td>
+                </tr>
                 {% endfor %}
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="10" class="p-2 text-center">No data available for this week.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="text-center mt-4">
+        <button class="button" onclick="toggleLegend2()">Toggle Legend</button>
+        <button onclick="printReport()" class="button">Print Report</button>
+    </div>
+    
+    <div id="legendContainer" class="flex justify-center mt-4 hidden">
+        <table class="w-1/2 text-center">
+            <thead>
+                <tr class="bg-gray-400 text-black">
+                    <th>Attendance Code</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for code, points in point_legend.items %}
+                <tr>
+                    <td class="border border-gray-400 p-2">{{ code }}</td>
+                    <td class="border border-gray-400 p-2">{{ points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<div class="text-center mt-4">
-    <button class="button" onclick="toggleLegend2()">Toggle Legend</button>
-    <button onclick="printReport()" class="button">Print Report</button>
-</div>
-
-<div id="legendContainer" class="flex justify-center mt-4 hidden">
-    <table class="w-1/2 text-center">
-        <thead>
-            <tr class="bg-gray-400 text-black">
-                <th>Attendance Code</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for code, points in point_legend.items %}
-            <tr>
-                <td class="border border-gray-400 p-2">{{ code }}</td>
-                <td class="border border-gray-400 p-2">{{ points }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-<script>
-    function toggleLegend2() {
-        var legend = document.getElementById("legendContainer");
-        if (legend.classList.contains("hidden")) {
-            legend.classList.remove("hidden");
-        } else {
-            legend.classList.add("hidden");
+    
+    <script>
+        function toggleLegend2() {
+            var legend = document.getElementById("legendContainer");
+            if (legend.classList.contains("hidden")) {
+                legend.classList.remove("hidden");
+            } else {
+                legend.classList.add("hidden");
+            }
         }
-    }
 
     function printReport() {
         var printContents = document.getElementById("printableReport").innerHTML;

@@ -17,7 +17,7 @@ class EmployeeForm(forms.ModelForm):
             })
         
         # Force width on the select dropdown
-        self.fields['restaurant'].widget.attrs.update({'style': 'width: 17%;'})
+        self.fields['restaurant'].widget.attrs.update({'style': 'width: 80%;'})
 
 
         # Filter the restaurant choices based on user role
