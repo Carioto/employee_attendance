@@ -964,6 +964,10 @@ select {
   max-width: 32rem;
 }
 
+.max-w-md {
+  max-width: 28rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1271,6 +1275,14 @@ select {
     display: block;
   }
 
+  .sm\:flex {
+    display: flex;
+  }
+
+  .sm\:max-w-xl {
+    max-width: 36rem;
+  }
+
   .sm\:items-stretch {
     align-items: stretch;
   }
@@ -1286,6 +1298,10 @@ select {
 }
 
 @media (min-width: 1024px) {
+  .lg\:max-w-3xl {
+    max-width: 48rem;
+  }
+
   .lg\:px-2 {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
