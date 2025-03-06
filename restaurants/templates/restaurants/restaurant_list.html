@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center">
+<div class="text-center mx-auto">
   <h1>Restaurants</h1>
-  <table class="w-3/4 mx-auto table-auto border-separate border-spacing-2 border border-gray-400 dark:border-gray-500">
+  <table class="mx-auto table-auto border-separate border-spacing-2 border border-gray-400 dark:border-gray-500">
     <thead>
       <tr>
         <th class="border border-gray-300 dark:border-gray-600">Name</th>
@@ -15,12 +15,12 @@
     <tbody>
       {% for restaurant in restaurants %}
       <tr>
-        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.name }}</td>
-        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.address }}</td>
-        <td class="border border-gray-300 dark:border-gray-700">{{ restaurant.gm|default:"None" }}</td>
-        <td class="border border-gray-300 dark:border-gray-700 text-center">
+        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.name }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.address }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.gm|default:"None" }}</td>
+        <td class="border border-gray-300 dark:border-gray-700 text-center pl-2 pr-2">
           <button type="button"
-            class="assign-gm-button button mb-3"
+            class="assign-gm-button button"
             data-restaurant-id="{{ restaurant.id }}"
             data-restaurant-name="{{ restaurant.name }}"
             data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">

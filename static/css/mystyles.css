@@ -1,3 +1,25 @@
+body{
+    background-color: white; /* Equivalent to bg-white */
+    color: black; /* Equivalent to text-black */
+    font-size: 1.25rem; /* Equivalent to text-xl (20px) */
+    padding-top: 1.5rem; /* Equivalent to p-6 (24px) */
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        background-color: black; /* Equivalent to dark:bg-black */
+        color: white; /* Equivalent to dark:text-white */
+    }
+}
+
+main{
+    margin-left: auto;  /* Equivalent to mx-auto */
+    margin-right: auto;
+    width: 100%;  /* Equivalent to w-full */
+    padding-top: 1.5rem;  /* Equivalent to p-6 (24px) */
+    display: flex;
+    align-items: center;  /* Equivalent to items-center (for flex container) */ 
+}
+
 h1{
     margin-left: auto;
     margin-right: auto;
@@ -66,4 +88,16 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 5px;
     color: #000;
+}
+
+/* General styles for larger screens remain unchanged */
+
+/* Mobile Screens (Phones) */
+@media (max-width: 768px) {
+
+}
+
+/* Medium Screens (Tablets) */
+@media (min-width: 768px) and (max-width: 1024px) {
+
 }

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Reports</h1>
-<ul class="text-center text-blue-500 hover:text-white">
-    <li><a href="{% url 'reports:weekly_compliance_report' %}" >Weekly Compliance Report</a></li>
-</ul>
+<div class="mx-auto">
+    <h1>Reports</h1>
+    <ul class="text-center text-blue-500 hover:text-white mx-auto">
+        <li><a href="{% url 'reports:weekly_compliance_report' %}" >Weekly Compliance Report</a></li>
+    </ul>
+</div>
 {% endblock %}
