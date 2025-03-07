@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center mx-auto w-full max-w-5xl px-4">
-  <h1 class="text-2xl font-bold">Employee List</h1>
+<div class="text-center mx-auto w-full max-w-5xl sm:px-4">
+  <h1 class="text-2xl font-bold">Employees</h1>
   
   <div class="pt-3 pb-4">
-    <a class="button text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-md" href="{% url 'restaurants:employee_create' %}">
+    <a class="button" href="{% url 'restaurants:employee_create' %}">
       Add New Employee
     </a>
   </div>
 
   <!-- Responsive Table Wrapper -->
   <div class="overflow-x-auto">
-    <table class="emptable w-full border-collapse text-sm sm:text-base">
+    <table class="w-full text-sm sm:text-base">
       <thead>
         <tr class="">
-          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">First Name</th>
-          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">Last Name</th>
-          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Restaurant</th> <!-- Hides on small screens -->
-          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">Actions</th>
+          <th class="bg-gray-200 dark:bg-gray-800">First Name</th>
+          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2">Last Name</th>
+          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Restaurant</th> <!-- Hides on small screens -->
+          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
