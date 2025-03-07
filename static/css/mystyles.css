@@ -121,14 +121,14 @@ footer{
         max-width: 400px;
         margin-left: auto;
         margin-right: auto;
-        padding: 10px 0;
+        padding: 5px 0;
         border-radius: 10px;
         min-height: fit-content; /* Dynamically adjust height */
     }
 
     /* Navbar border container */
     .navbord {
-        width: 80% !important;
+        width: 50% !important;
         max-width: 400px;
         margin-left: auto;
         margin-right: auto;
@@ -140,7 +140,6 @@ footer{
         width: 100%;
         padding: 10px 15px;
         text-align: center;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     /* Remove bottom border from the last link */
@@ -159,6 +158,9 @@ footer{
     }
     .login-container {
         margin: 5px auto;
+    }
+    .button{
+        font-size: .75rem;
     }
 
     
