@@ -162,6 +162,12 @@ footer{
     .button{
         font-size: .75rem;
     }
+    table{
+        border-spacing: 0;
+    }
+    .codebox{
+        width: 150px;
+    }
 
     
 }

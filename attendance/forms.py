@@ -6,7 +6,7 @@ class AttendanceEntryForm(forms.Form):
     code = forms.ChoiceField(
         choices=AttendanceRecord.ATTENDANCE_CODES,
         required=False,
-        widget=forms.Select(attrs={'class': 'border p-1 rounded'})
+        widget=forms.Select(attrs={'class': 'border sm:p-1 rounded font-bold w-1/6 truncate-text codebox'})
     )
     comment = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 1, 'class': 'border p-1 rounded'}),
