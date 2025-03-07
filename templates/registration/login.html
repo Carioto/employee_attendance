@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="login-container">
-    <h2 class="text-2xl p-3">Use your credentials to log in</h2>
+    <h2 class="text-xl sm:p-3 logcred">Use your credentials to log in</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

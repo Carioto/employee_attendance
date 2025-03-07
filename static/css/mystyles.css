@@ -90,6 +90,10 @@ button:hover {
     color: #000;
 }
 
+footer{
+    padding: 40px;
+}
+
 /* Mobile Screens (Phones) */
 @media (max-width: 600px) {
     h1 {
@@ -101,6 +105,10 @@ button:hover {
         flex-direction: column;
         align-items: center;
         gap: 10px; /* Adds spacing between links */
+    }
+    main{
+        padding-top: 0
+
     }
 
     /* Ensure the navbar container is flexible */
@@ -139,6 +147,21 @@ button:hover {
     .navitems a:last-child {
         border-bottom: none;
     }
+    footer{
+        font-size: .75rem;
+    }
+    .footimg{
+        height: 20px;
+    }
+    .foothold{
+        height: 20px;
+
+    }
+    .login-container {
+        margin: 5px auto;
+    }
+
+    
 }
 
 
