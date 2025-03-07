@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="mx-auto">
+<div class="mx-auto w-full max-w-5xl sm:px-4">
 
-    <h1>Weekly Compliance Report</h1>
+    <h1 class="text-center text-xl sm:text-2xl font-bold">Weekly Compliance Report</h1>
     
     <form method="GET" class="text-center p-3">
         <label for="week">Select Week Beginning:</label>
@@ -13,45 +13,50 @@
             {% endfor %}
         </select>
     </form>
+
     <div id="printableReport">
-        <h2 class="text-center">Weekly Compliance Report - Week Beginning {{ selected_week }}</h2>
-        <table class="w-full">
-            <thead>
-                <tr class="bg-gray-400 text-black">
-                    <th>Employee</th>
-                    <th>Weekly %</th>
-                    <th>3-Month Pts</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for employee in employees %}
-                <tr>
-                    <td class="border border-gray-400 p-2">{{ employee.name }}</td>
-                    <td class="border border-gray-400 p-2 text-center">{{ employee.weekly_compliance }}%</td>
-                    <td class="border border-gray-400 p-2 text-center">{{ employee.point_total }}</td>
-                    {% for day in employee.codes.values %}
-                    <td class="border border-gray-400 p-2 text-center relative">
-                        {{ day.code }}
-                        {% if day.comment %}
-                        <span class="ml-1 text-blue-500 cursor-pointer" title="{{ day.comment }}">&#9733;</span>
-                        {% endif %}
-                    </td>
+        <h2 class="text-center text-lg sm:text-xl">Week Beginning {{ selected_week }}</h2>
+        
+        <!-- Responsive Table Wrapper -->
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm sm:text-base">
+                <thead>
+                    <tr class="bg-gray-400 text-black">
+                        <th class="sm:p-2">Employee</th>
+                        <th class="sm:p-2 text-center">Weekly %</th>
+                        <th class="sm:p-2 text-center">3-Month Pts</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Monday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Tuesday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Wednesday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Thursday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Friday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Saturday</th>
+                        <th class="hidden sm:table-cell sm:p-2 text-center">Sunday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <td class="border border-gray-400 p-2">{{ employee.name }}</td>
+                        <td class="border border-gray-400 p-2 text-center">{{ employee.weekly_compliance }}%</td>
+                        <td class="border border-gray-400 p-2 text-center">{{ employee.point_total }}</td>
+                        {% for day in employee.codes.values %}
+                        <td class="border border-gray-400 p-2 text-center hidden sm:table-cell relative">
+                            {{ day.code }}
+                            {% if day.comment %}
+                            <span class="ml-1 text-blue-500 cursor-pointer" title="{{ day.comment }}">&#9733;</span>
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="p-2 text-center">No data available for this week.</td>
+                    </tr>
                     {% endfor %}
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="10" class="p-2 text-center">No data available for this week.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
     
     <div class="text-center mt-4">
@@ -78,16 +83,12 @@
         </table>
     </div>
 </div>
-    
-    <script>
-        function toggleLegend2() {
-            var legend = document.getElementById("legendContainer");
-            if (legend.classList.contains("hidden")) {
-                legend.classList.remove("hidden");
-            } else {
-                legend.classList.add("hidden");
-            }
-        }
+
+<script>
+    function toggleLegend2() {
+        var legend = document.getElementById("legendContainer");
+        legend.classList.toggle("hidden");
+    }
 
     function printReport() {
         var printContents = document.getElementById("printableReport").innerHTML;
@@ -95,10 +96,15 @@
 
         document.body.innerHTML = "<html><head><title>Print Report</title>" +
             "<style>" +
-            "body { font-family: Arial, sans-serif; margin:0; margin-top: 40px; }" +
-            "table { width: 100%; border-collapse: collapse; }" +
-            "th, td { border: 1px solid black; padding: 4px; text-align: center; }" +
+            "body { font-family: Arial, sans-serif; margin: 0; padding: 10px; }" +
+            "table { width: auto; max-width: 100%; border-collapse: collapse; table-layout: auto; }" +
+            "th, td { border: 1px solid black; text-align: center; padding: 4px; font-size: 12px; word-wrap: break-word; }" +
             "th { background-color: #f2f2f2; }" +
+            "@media print {" +
+            "  body { margin: 0; padding: 10px; }" + /* Ensures proper print margins */
+            "  table { width: 100%; }" + /* Forces table to fit page */
+            "  th, td { font-size: 10px; padding: 3px; }" + /* Smaller font for print */
+            "}" +
             "</style></head><body>" +
             printContents + "</body></html>";
 
@@ -108,3 +114,4 @@
     }
 </script>
 {% endblock %}
+
