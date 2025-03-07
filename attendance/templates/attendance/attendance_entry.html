@@ -1,98 +1,98 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="mx-auto p-2">
+<div class="mx-auto sm:p-2 w-full max-w-5xl sm:px-4">
   <div class="text-center relative">
-    <button onclick="toggleLegend()" class="button absolute top-0 right-5">Toggle Legend</button>
+    <button onclick="toggleLegend()" class="button absolute top-0 right-5 text-sm sm:text-base">Toggle Legend</button>
   </div>
-  <h1>Attendance for {{ selected_date }}</h1>
+  <h1 class="text-xl sm:text-2xl font-bold">Attendance for:</h1>
+  <h2 class="text-xl sm:text-2xl font-bold text-center">{{ selected_date }}</h2>
   
   {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
   <!-- Date picker for GM and above -->
   <form method="get" class="mb-4 text-center">
-    <label for="date" class="block mb-1">Select Date:</label>
-    <input type="date" name="date" id="date" value="{{ selected_date }}" class="border p-1">
-    <button type="submit" class="button">Go</button>
+    <label for="date" class="block mb-1 text-sm sm:text-base">Select Date:</label>
+    <input type="date" name="date" id="date" value="{{ selected_date }}" class="border p-1 text-sm sm:text-base">
+    <button type="submit" class="button text-sm sm:text-base">Go</button>
   </form>
   {% endif %}
-
-
+<p class="text-sm text-center sm:hidden">Comments disabled for smaller screens</p>
   <form method="post" class="pt-4">
     {% csrf_token %}
     {{ formset.management_form }}
-    <table class="w-3/4">
-      <thead>
-        <tr>
-          <th class="border p-2">Employee Name</th>
-          <th class="border p-2">Attendance Code</th>
-          <th class="border p-2">Comment(optional)</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for form, employee in form_employee %}
-        <tr>
-          <td class="border p-2 text-center dark:text-white">{{ employee.first_name }} {{ employee.last_name }}</td>
-          <td class="border p-2 text-center text-red-500 font-bold">{{ form.code }}</td>
-          <td class="border p-2 text-center text-red-500 font-bold">{{ form.comment }}</td>
-          <input type="hidden" name="form-{{ forloop.counter0 }}-employee_id" value="{{ employee.id }}">
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="3" class="text-center">No employees found.</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    
+    <!-- Responsive Table Wrapper -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm sm:text-base border-collapse">
+        <thead>
+          <tr class="bg-gray-200 dark:bg-gray-800">
+            <th class="border py-1 sm:px-3 sm:py-2">Employee Name</th>
+            <th class="border py-1 sm:px-3 sm:py-2">Attendance Code</th>
+            <th class="border py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Comment (Optional)</th> <!-- Hidden on small screens -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for form, employee in form_employee %}
+          <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+            <td class="border px-2 py-1 sm:px-3 sm:py-2 text-center dark:text-white truncate-text">
+              {{ employee.first_name }} {{ employee.last_name }}
+            </td>
+            <td class="border px-2 py-1 sm:px-3 sm:py-2 text-red-500 font-bold">
+              {{ form.code }}
+            </td>
+            <td class="border px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell text-center text-red-500 font-bold">
+              {{ form.comment }}
+            </td> <!-- Hidden on small screens -->
+            <input type="hidden" name="form-{{ forloop.counter0 }}-employee_id" value="{{ employee.id }}">
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="3" class="text-center py-4 text-gray-600">No employees found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
     <div class="p-3 text-center mx-auto">
-      <button type="submit" class="button">Save Attendance</button>
+      <button type="submit" class="button text-sm sm:text-base">Save Attendance</button>
     </div>
   </form>
 
-  <div id="legendContainer2" class="hidden">
-    <table class="text-center mx-auto">
-      <thead>
-        <tr>
-          <th class="border px-2 py-1 bg-gray-200 text-black">Code</th>
-          <th class="border px-2 py-1 bg-gray-200 text-black">Meaning</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="border px-2 py-1">NS</td>
-          <td class="border px-2 py-1">No Show</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">CO</td>
-          <td class="border px-2 py-1">Called Off with at least 2 hours notice</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">LCO</td>
-          <td class="border px-2 py-1">Called Off without 2 hours notice</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">L</td>
-          <td class="border px-2 py-1">Late (more than 10 minutes) with notification</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">LNN</td>
-          <td class="border px-2 py-1">Late (more than 10 minutes) without notifying restaurant</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">XL</td>
-          <td class="border px-2 py-1">More than 30 minutes regardless of notifying restaurant</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">P</td>
-          <td class="border px-2 py-1">Showed for scheduled shift no more than 5 minutes late</td>
-        </tr>
-        <tr>
-          <td class="border px-2 py-1">HRO</td>
-          <td class="border px-2 py-1">Off but came in / Adjusted shift to support restaurant</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Attendance Legend -->
+  <div id="legendContainer2" class="hidden mt-4">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm sm:text-base text-center mx-auto border-collapse">
+        <thead>
+          <tr class="bg-gray-200 dark:bg-gray-800">
+            <th class="border px-2 py-1 sm:px-3 sm:py-2">Code</th>
+            <th class="border px-2 py-1 sm:px-3 sm:py-2">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="border px-2 py-1">NS</td><td class="border px-2 py-1">No Show</td></tr>
+          <tr><td class="border px-2 py-1">CO</td><td class="border px-2 py-1">Called Off with at least 2 hours notice</td></tr>
+          <tr><td class="border px-2 py-1">LCO</td><td class="border px-2 py-1">Called Off without 2 hours notice</td></tr>
+          <tr><td class="border px-2 py-1">L</td><td class="border px-2 py-1">Late (more than 10 minutes) with notification</td></tr>
+          <tr><td class="border px-2 py-1">LNN</td><td class="border px-2 py-1">Late (more than 10 minutes) without notifying restaurant</td></tr>
+          <tr><td class="border px-2 py-1">XL</td><td class="border px-2 py-1">More than 30 minutes regardless of notifying restaurant</td></tr>
+          <tr><td class="border px-2 py-1">P</td><td class="border px-2 py-1">Showed for scheduled shift no more than 5 minutes late</td></tr>
+          <tr><td class="border px-2 py-1">HRO</td><td class="border px-2 py-1">Off but came in / Adjusted shift to support restaurant</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <script>
+    function toggleLegend() {
+        var legend = document.getElementById("legendContainer2");
+        legend.classList.toggle("hidden");
+    }
+  </script>
+</div>
+{% endblock %}
+
+
+  <!-- <script>
     function toggleLegend() {
         var legend = document.getElementById("legendContainer2");
         if (legend.classList.contains("hidden")) {
@@ -101,6 +101,5 @@
             legend.classList.add("hidden");
         }
     }
-  </script>
-</div>
-{% endblock %}
+  </script> -->
+

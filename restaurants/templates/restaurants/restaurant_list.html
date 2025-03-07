@@ -1,43 +1,53 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center mx-auto">
-  <h1>Restaurants</h1>
-  <table class="mx-auto table-auto border-separate border-spacing-2 border border-gray-400 dark:border-gray-500">
-    <thead>
-      <tr>
-        <th class="border border-gray-300 dark:border-gray-600">Name</th>
-        <th class="border border-gray-300 dark:border-gray-600">Address</th>
-        <th class="border border-gray-300 dark:border-gray-600">Assigned GM</th>
-        <th class="border border-gray-300 dark:border-gray-600">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for restaurant in restaurants %}
-      <tr>
-        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.name }}</td>
-        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.address }}</td>
-        <td class="border border-gray-300 dark:border-gray-700 pl-2 pr-2">{{ restaurant.gm|default:"None" }}</td>
-        <td class="border border-gray-300 dark:border-gray-700 text-center pl-2 pr-2">
-          <button type="button"
-            class="assign-gm-button button"
-            data-restaurant-id="{{ restaurant.id }}"
-            data-restaurant-name="{{ restaurant.name }}"
-            data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">
-            Assign / Edit GM
-          </button>        
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="4">No restaurants found.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="text-center mx-auto w-full max-w-5xl sm:px-4">
+  <h1 class="text-2xl font-bold">Restaurants</h1>
+
+  <!-- Responsive Table Wrapper -->
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm sm:text-base">
+      <thead>
+        <tr class="bg-gray-200 dark:bg-gray-800">
+          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">Name</th>
+          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Address</th> <!-- Hides on small screens -->
+          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">Assigned GM</th>
+          <th class="border border-gray-300 dark:border-gray-600 px-2 py-1 sm:px-3 sm:py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for restaurant in restaurants %}
+        <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+          <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 sm:px-3 sm:py-2 truncate-text">
+            {{ restaurant.name }}
+          </td>
+          <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">
+            {{ restaurant.address }}
+          </td> <!-- Hides on small screens -->
+          <td class="border border-gray-300 dark:border-gray-700 px-2 py-1 sm:px-3 sm:py-2">
+            {{ restaurant.gm|default:"None" }}
+          </td>
+          <td class="border border-gray-300 dark:border-gray-700 text-center px-2 py-1 sm:px-3 sm:py-2">
+            <button type="button"
+              class="assign-gm-button button text-blue-600 hover:text-blue-800 font-medium"
+              data-restaurant-id="{{ restaurant.id }}"
+              data-restaurant-name="{{ restaurant.name }}"
+              data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">
+              Edit GM
+            </button>        
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4" class="text-center py-4 text-gray-600">No restaurants found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<!-- Modal JavaScript -->
+<!-- Modal JavaScript (unchanged) -->
 <script>
   document.addEventListener('DOMContentLoaded', function(){
     const modal = document.getElementById('gmModal');
@@ -46,32 +56,28 @@
     const gmSelect = document.getElementById('gmSelect');
     const cancelButton = document.getElementById('modalCancelButton');
 
-    // When any button with class assign-gm-button is clicked, open the modal
     document.querySelectorAll('.assign-gm-button').forEach(function(button){
         button.addEventListener('click', function(){
             const restaurantId = button.getAttribute('data-restaurant-id');
             const restaurantName = button.getAttribute('data-restaurant-name');
-            const assignedGmId = button.getAttribute('data-restaurant-gm'); // New data attribute
+            const assignedGmId = button.getAttribute('data-restaurant-gm');
 
             modalRestaurantId.value = restaurantId;
             modalRestaurantName.textContent = restaurantName;
             
-            // Set the default selected GM in the dropdown
             if (assignedGmId && assignedGmId !== "None") {
                 gmSelect.value = assignedGmId;
             } else {
-                gmSelect.value = ""; // Default to "None" if no GM assigned
+                gmSelect.value = "";
             }
 
             modal.classList.remove('hidden');
         });
     });
 
-    // Close the modal when cancel button is clicked
     cancelButton.addEventListener('click', function(){
         modal.classList.add('hidden');
     });
 });
-
 </script>
 {% endblock %}
