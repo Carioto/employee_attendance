@@ -16,11 +16,12 @@ class EmployeeListView(LoginRequiredMixin, ListView):
         user = self.request.user
         # If the user is a GM, show employees for their restaurant.
         if user.role == 'gm' and user.restaurant:
-            return Employee.objects.filter(restaurant=user.restaurant)
-        # For DM and superuser, you might want to show all or a filtered list.
+            return Employee.objects.filter(restaurant=user.restaurant).order_by('first_name')
+        # For DM and superuser, show all employees ordered alphabetically by first name.
         elif user.role in ['dm', 'superuser']:
-            return Employee.objects.all()
+            return Employee.objects.all().order_by('first_name')
         return Employee.objects.none()
+
 
 
 class EmployeeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
