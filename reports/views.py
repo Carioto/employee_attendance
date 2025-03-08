@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime, timedelta
 from django.contrib.auth.decorators import login_required
-from attendance.models import AttendanceRecord  # Updated model import
+from attendance.models import AttendanceRecord
 from restaurants.models import Employee
 
 def get_mondays():
@@ -78,3 +78,45 @@ def weekly_compliance_report(request):
         'point_legend': ATTENDANCE_POINTS
     }
     return render(request, 'reports/weekly_compliance_report.html', context)
+
+@login_required
+def monthly_attendance_summary(request):
+    selected_month = request.GET.get('month', datetime.today().strftime('%Y-%m'))
+    start_date = datetime.strptime(selected_month, '%Y-%m')
+    end_date = start_date + timedelta(days=31)
+    
+    monthly_attendance = AttendanceRecord.objects.filter(date__range=[start_date, end_date])
+    employees = {}
+    
+    for entry in monthly_attendance:
+        if entry.employee.id not in employees:
+            employees[entry.employee.id] = {
+                'name': f"{entry.employee.first_name} {entry.employee.last_name}",
+                'first_name': entry.employee.first_name,
+                'total_scheduled': 0,
+                'total_present': 0,
+                'total_absent': 0,
+                'total_late': 0,
+                'percent_compliant': 0,
+            }
+        
+        employees[entry.employee.id]['total_scheduled'] += 1
+        
+        if entry.code == 'P' or entry.code == 'HRO':
+            employees[entry.employee.id]['total_present'] += 1
+        elif entry.code in ['NS', 'LCO', 'CO']:
+            employees[entry.employee.id]['total_absent'] += 1
+        elif entry.code in ['L', 'XL']:
+            employees[entry.employee.id]['total_late'] += 1
+        
+    for employee in employees.values():
+        if employee['total_scheduled'] > 0:
+            employee['percent_compliant'] = round((employee['total_present'] / employee['total_scheduled']) * 100, 2)
+        
+    sorted_employees = sorted(employees.values(), key=lambda x: x['first_name'].lower())
+    
+    context = {
+        'selected_month': selected_month,
+        'employees': sorted_employees,
+    }
+    return render(request, 'reports/monthly_attendance_summary.html', context)

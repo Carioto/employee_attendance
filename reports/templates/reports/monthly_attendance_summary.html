@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center w-full">
+
+    <h1 class="text-center p-3 text-xl sm:text-2xl">Monthly Attendance Summary</h1>
+    
+    <form method="GET" class="text-center p-3">
+        <label for="month">Select Month:</label>
+        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold">
+        <button type="submit" class="button">Go</button>
+    </form>
+    <div id="printableReport">
+        <table class="border-collapse w-3/4 text-sm border border-gray-300 sm:text-base">
+            <thead>
+                <tr class="bg-gray-200 text-black">
+                    <th class="border border-gray-400 p-2">Employee</th>
+                    <th class="border border-gray-400 p-2">Days Scheduled</th>
+                    <th class="hidden sm:table-cell border border-gray-400 p-2">Days Present</th>
+                    <th class="hidden sm:table-cell border border-gray-400 p-2">Days Absent</th>
+                    <th class="hidden sm:table-cell border border-gray-400 p-2">Days Late</th>
+                    <th class="border border-gray-400 p-2">% Compliant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td class="border border-gray-400 p-2">{{ employee.name }}</td>
+                    <td class="border border-gray-400 p-2 text-center">{{ employee.total_scheduled }}</td>
+                    <td class="hidden sm:table-cell border border-gray-400 p-2 text-center">{{ employee.total_present }}</td>
+                    <td class="hidden sm:table-cell border border-gray-400 p-2 text-center">{{ employee.total_absent }}</td>
+                    <td class="hidden sm:table-cell border border-gray-400 p-2 text-center">{{ employee.total_late }}</td>
+                    <td class="border border-gray-400 p-2 text-center">{{ employee.percent_compliant }}%</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="border border-gray-400 p-2 text-center">No data available for this month.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p class="text-center mt-4">Monthly Attendance Summary -- {{ selected_month }} </p>
+    </div>
+    <div class="text-center mt-4">
+        <button onclick="printReport()" class="button">Print Report</button>
+    </div>
+</div>
+
+<script>
+
+    function printReport() {
+        var printContents = document.getElementById("printableReport").innerHTML;
+    var originalContents = document.body.innerHTML;
+    
+    document.body.innerHTML = "<html><head><title>Print Report</title>" +
+        "<style>" +
+            "body { font-family: Arial, sans-serif; margin: 0; padding: 10px; }" +
+            "table { width: auto; max-width: 100%; border-collapse: collapse; table-layout: auto; }" +
+            "th, td { border: 1px solid black; text-align: center; padding: 4px; font-size: 12px; word-wrap: break-word; }" +
+            "th { background-color: #f2f2f2; }" +
+            "@media print {" +
+            "  body { margin: 0; padding: 10px; }" + /* Ensures proper print margins */
+            "  table { width: 100%; }" + /* Forces table to fit page */
+            "  th, td { font-size: 10px; padding: 3px; }" + /* Smaller font for print */
+            "}" +
+            "</style></head><body>" +
+            printContents + "</body></html>";    
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload();
+            }
+</script>
+        {% endblock %}   
