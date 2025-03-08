@@ -948,6 +948,10 @@ select {
   width: 100%;
 }
 
+.w-3\/4 {
+  width: 75%;
+}
+
 .max-w-5xl {
   max-width: 64rem;
 }
@@ -966,10 +970,6 @@ select {
 
 .shrink-0 {
   flex-shrink: 0;
-}
-
-.shrink {
-  flex-shrink: 1;
 }
 
 .border-collapse {
@@ -1124,11 +1124,6 @@ select {
   padding-bottom: 1rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .pb-4 {
   padding-bottom: 1rem;
 }
@@ -1164,6 +1159,11 @@ select {
   line-height: 1;
 }
 
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1171,11 +1171,6 @@ select {
 
 .text-xl {
   font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
-.text-lg {
-  font-size: 1.125rem;
   line-height: 1.75rem;
 }
 
