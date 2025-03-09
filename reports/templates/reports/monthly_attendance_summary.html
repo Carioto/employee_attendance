@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="text-center w-full">
+<div class="text-center w-full"  id="printableReport">
 
     <h1 class="text-center p-3 text-xl sm:text-2xl">Monthly Attendance Summary</h1>
     
     <form method="GET" class="text-center p-3">
-        <label for="month">Select Month:</label>
-        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold">
-        <button type="submit" class="button">Go</button>
+        <label for="month" class="no-print">Select Month:</label>
+        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold border-none">
+        <button type="submit" class="button no-print">Go</button>
     </form>
-    <div id="printableReport">
+    <div>
         <table class="border-collapse w-3/4 text-sm border border-gray-300 sm:text-base">
             <thead>
                 <tr class="bg-gray-200 text-black">
@@ -39,35 +39,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        <p class="text-center mt-4">Monthly Attendance Summary -- {{ selected_month }} </p>
     </div>
     <div class="text-center mt-4">
-        <button onclick="printReport()" class="button">Print Report</button>
+        <button onclick="printReport()" class="button no-print">Print Report</button>
     </div>
 </div>
 
-<script>
-
-    function printReport() {
-        var printContents = document.getElementById("printableReport").innerHTML;
-    var originalContents = document.body.innerHTML;
-    
-    document.body.innerHTML = "<html><head><title>Print Report</title>" +
-        "<style>" +
-            "body { font-family: Arial, sans-serif; margin: 0; padding: 10px; }" +
-            "table { width: auto; max-width: 100%; border-collapse: collapse; table-layout: auto; }" +
-            "th, td { border: 1px solid black; text-align: center; padding: 4px; font-size: 12px; word-wrap: break-word; }" +
-            "th { background-color: #f2f2f2; }" +
-            "@media print {" +
-            "  body { margin: 0; padding: 10px; }" + /* Ensures proper print margins */
-            "  table { width: 100%; }" + /* Forces table to fit page */
-            "  th, td { font-size: 10px; padding: 3px; }" + /* Smaller font for print */
-            "}" +
-            "</style></head><body>" +
-            printContents + "</body></html>";    
-            window.print();
-            document.body.innerHTML = originalContents;
-            location.reload();
-            }
-</script>
-        {% endblock %}   
+{% endblock %}   

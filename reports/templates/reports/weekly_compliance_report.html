@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="mx-auto w-full max-w-5xl sm:px-4">
+<div class="mx-auto w-full max-w-5xl sm:px-4" id="printableReport">
 
     <h1 class="text-center text-xl sm:text-2xl font-bold">Weekly Compliance Report</h1>
     
-    <form method="GET" class="text-center p-3">
+    <form method="GET" class="text-center p-3 no-print">
         <label for="week">Select Week Beginning:</label>
         <select name="week" id="week" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
             {% for monday in mondays %}
@@ -14,7 +14,7 @@
         </select>
     </form>
 
-    <div id="printableReport">
+    <div>
         <h2 class="text-center text-lg sm:text-xl">Week Beginning {{ selected_week }}</h2>
         
         <!-- Responsive Table Wrapper -->
@@ -59,7 +59,7 @@
         </div>
     </div>
     
-    <div class="text-center mt-4">
+    <div class="text-center mt-4 no-print">
         <button class="button" onclick="toggleLegend2()">Toggle Legend</button>
         <button onclick="printReport()" class="button">Print Report</button>
     </div>
@@ -88,29 +88,6 @@
     function toggleLegend2() {
         var legend = document.getElementById("legendContainer");
         legend.classList.toggle("hidden");
-    }
-
-    function printReport() {
-        var printContents = document.getElementById("printableReport").innerHTML;
-        var originalContents = document.body.innerHTML;
-
-        document.body.innerHTML = "<html><head><title>Print Report</title>" +
-            "<style>" +
-            "body { font-family: Arial, sans-serif; margin: 0; padding: 10px; }" +
-            "table { width: auto; max-width: 100%; border-collapse: collapse; table-layout: auto; }" +
-            "th, td { border: 1px solid black; text-align: center; padding: 4px; font-size: 12px; word-wrap: break-word; }" +
-            "th { background-color: #f2f2f2; }" +
-            "@media print {" +
-            "  body { margin: 0; padding: 10px; }" + /* Ensures proper print margins */
-            "  table { width: 100%; }" + /* Forces table to fit page */
-            "  th, td { font-size: 10px; padding: 3px; }" + /* Smaller font for print */
-            "}" +
-            "</style></head><body>" +
-            printContents + "</body></html>";
-
-        window.print();
-        document.body.innerHTML = originalContents;
-        location.reload();
     }
 </script>
 {% endblock %}

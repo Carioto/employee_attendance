@@ -4,8 +4,10 @@
 <div class="mx-auto">
     <h1>Reports</h1>
     <ul class="text-center mx-auto">
-        <li><a class="text-blue-500 hover:text-white" href="{% url 'reports:weekly_compliance_report' %}" >Weekly Compliance Report</a></li>
-        <li><a class="text-blue-500 hover:text-white" href="{% url 'reports:monthly_attendance_summary' %}" >Monthly Attendance Summary</a></li>
+        <li class="mb-2"><a class="text-blue-500 hover:text-white" href="{% url 'reports:weekly_compliance_report' %}" >Weekly Compliance Report</a></li>
+        <li class="mb-2"><a class="text-blue-500 hover:text-white" href="{% url 'reports:monthly_attendance_summary' %}" >Monthly Attendance Summary</a></li>
+        <li class="mb-2"><a class="text-blue-500 hover:text-white" href="{% url 'reports:monthly_attendance_detail' %}" >Monthly Attendance Detail</a></li>
+        <li class="mb-2"><a class="text-blue-500 hover:text-white" href="{% url 'reports:individual_attendance_report' %}" >Individual Attendance Report</a></li>
     </ul>
 </div>
 {% endblock %}

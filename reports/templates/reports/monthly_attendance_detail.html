@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="w-full text-center" id="printableReport">
+    <h1 class="text-center p-3 text-2xl">Monthly Attendance Detail</h1>
+
+    <form method="GET" class="text-center p-3">
+        <label for="month" class="no-print">Select Month:</label>
+        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold border-none" onchange="this.form.submit()">
+        <button type="submit" class="button no-print">Go</button>
+    </form>
+
+    <table class="border-collapse w-full border border-gray-300">
+        <thead>
+            <tr class="bg-gray-200 text-black">
+                <th class="border border-gray-400 p-2">Employee</th>
+                {% for day in days_in_month %}
+                    <th class="border border-gray-400 p-2">{{ day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for employee in employees %}
+            <tr>
+                <td class="border border-gray-400 p-2">
+                    <a href="{% url 'reports:individual_attendance_report' %}?month={{ selected_month }}&employee={{ employee.id }}" class="text-blue-500 underline">
+                        {{ employee.name }}
+                    </a></td>
+                {% for day in days_in_month %}
+                <td class="border border-gray-400 p-2 text-center relative">
+                    {% with record=employee.attendance|get_item:day %}
+                        {{ record.code|default:"-" }}
+                        {% if record.comment %}
+                        <span class="ml-1 text-blue-500 cursor-pointer" title="{{ record.comment }}">&#9733;</span>
+                        {% endif %}
+                    {% endwith %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{{ days_in_month|length|add:1 }}" class="border border-gray-400 p-2 text-center">No attendance records found for this month.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center mt-4">
+        <button onclick="printReport()" class="button no-print">Print Report</button>
+    </div>
+</div>
+{% endblock %}

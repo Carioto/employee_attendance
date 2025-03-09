@@ -40,7 +40,7 @@ This is a solo project by David Carioto
 
 ## Tests
 
-log in with to see data 
+log in with user 'DemoGM' and password 'DemoPass#1' to use GM functionality of DemoRestaurant
 
 ## Questions
 

@@ -94,7 +94,11 @@ button:hover {
 footer{
     padding: 40px;
 }
-
+@media print {
+        .no-print {
+            display: none !important;
+        }
+    }
 /* Mobile Screens (Phones) */
 @media (max-width: 600px) {
     h1 {
