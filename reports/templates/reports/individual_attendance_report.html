@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="w-full text-center" id="printableReport">
+    <h1 class="text-center p-3 text-2xl">Individual Attendance Report</h1>
+
+    <form method="GET" class="text-center p-3 no-print">
+        <label for="month">Select Month:</label>
+        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+    </form>
+    
+    {% if employees %}
+    <form method="GET" class="text-center p-3 no-print">
+        <input type="hidden" name="month" value="{{ selected_month }}">
+        <input type="hidden" name="employee" value="{{ selected_employee }}">
+        <label for="employee">Select Employee:</label>
+        <select name="employee" id="employee" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+            <option value="">-- Select Employee --</option>
+            {% for employee in employees %}
+                <option value="{{ employee.id }}" {% if selected_employee|stringformat:"s" == employee.id|stringformat:"s" %}selected{% endif %}>
+                    {{ employee.name }}
+                </option>
+            {% endfor %}
+        </select>
+        
+    </form>
+    {% endif %}
+    
+    {% if selected_employee %}
+    <div class="no-print">
+        <a href="{% url 'reports:monthly_attendance_detail' %}?month={{ selected_month }}" class="button no-print">
+            Monthly Report for {{ selected_month }}
+        </a>
+        <button onclick="printReport()" class="button ml-3">Print Report</button>
+
+
+    </div>
+    <h2 class="text-xl font-bold mt-4 text-center">
+        Attendance Record for {{ selected_employee_name }} for {{ selected_month }}
+    </h2>
+    
+    
+    <table class="border-collapse w-1/2 border border-gray-300">
+        <thead>
+            <tr class="bg-gray-200 text-black">
+                <th class="border border-gray-400 p-2">Date</th>
+                <th class="border border-gray-400 p-2">Attendance Code</th>
+                <th class="border border-gray-400 p-2">Comment</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day in days_in_month %}
+            <tr>
+                <td class="border border-gray-400 p-2">{{ selected_month }}-{{ day }}</td>
+                {% with record=attendance_data|get_item:day %}
+                    <td class="border border-gray-400 p-2 text-center">{{ record.code|default:"-" }}</td>
+                    <td class="border border-gray-400 p-2 text-center">{{ record.comment|default:"-" }}</td>
+                {% endwith %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
