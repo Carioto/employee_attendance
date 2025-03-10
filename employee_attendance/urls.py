@@ -5,6 +5,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.views.generic import TemplateView
 from django.conf.urls import handler404
 from accounts.views import custom_404_view  # Import the 404 view
+from django.conf.urls import handler403
+from restaurants.views import custom_permission_denied_view
 
 urlpatterns = [
     path('', lambda request: redirect('login', permanent=False)),  # ✅ Redirect / to /login/
@@ -20,3 +22,4 @@ urlpatterns = [
 ]
 
 handler404 = custom_404_view
+handler403 = custom_permission_denied_view

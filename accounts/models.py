@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from restaurants.models import Restaurant  # Make sure your restaurants app is created and migrated
+from restaurants.models import Restaurant
 
 class CustomUser(AbstractUser):
     MANAGER = 'manager'
