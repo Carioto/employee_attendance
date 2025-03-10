@@ -170,3 +170,5 @@ NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 300  # 5 minutes
 SESSION_SAVE_EVERY_REQUEST = True  # Reset session timer on each request
+HANDLER403 = 'restaurants.views.custom_permission_denied_view'
+

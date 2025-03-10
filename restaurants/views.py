@@ -1,28 +1,33 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from .models import Employee, Restaurant
 from .forms import EmployeeForm, RestaurantForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from accounts.models import CustomUser
 
-class EmployeeListView(LoginRequiredMixin, ListView):
+def custom_permission_denied_view(request, exception=None):
+    return render(request, "errors/403.html", status=403)
+
+class EmployeeListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Employee
     template_name = 'restaurants/employee_list.html'
     context_object_name = 'employees'
 
+    def test_func(self):
+        if self.request.user.role not in ['gm', 'dm', 'superuser']:
+            raise PermissionDenied  # Explicitly deny unauthorized access
+        return True
+
     def get_queryset(self):
         user = self.request.user
-        # If the user is a GM, show employees for their restaurant.
         if user.role == 'gm' and user.restaurant:
             return Employee.objects.filter(restaurant=user.restaurant).order_by('first_name')
-        # For DM and superuser, show all employees ordered alphabetically by first name.
         elif user.role in ['dm', 'superuser']:
             return Employee.objects.all().order_by('first_name')
         return Employee.objects.none()
-
-
 
 class EmployeeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Employee
@@ -31,8 +36,9 @@ class EmployeeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     success_url = reverse_lazy('restaurants:employee_list')
 
     def test_func(self):
-        # Only GM, DM, or superuser can add employees.
-        return self.request.user.role in ['gm', 'dm', 'superuser']
+        if self.request.user.role not in ['gm', 'dm', 'superuser']:
+            raise PermissionDenied  # Explicitly deny unauthorized access
+        return True
 
     def form_valid(self, form):
         user = self.request.user
@@ -56,11 +62,14 @@ class EmployeeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         user = self.request.user
         employee = self.get_object()
-        # GM can only update employees belonging to their restaurant.
+
         if user.role == 'gm' and user.restaurant:
-            return employee.restaurant == user.restaurant
-        # DM and superuser have broader permissions.
-        return user.role in ['dm', 'superuser']
+            if employee.restaurant != user.restaurant:
+                raise PermissionDenied  # GM can only edit employees from their restaurant
+        elif user.role not in ['dm', 'superuser']:
+            raise PermissionDenied  # Only GM, DM, or Superuser can edit
+
+        return True
 
 
 class EmployeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -71,10 +80,14 @@ class EmployeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         user = self.request.user
         employee = self.get_object()
-        if user.role == 'gm' and user.restaurant:
-            return employee.restaurant == user.restaurant
-        return user.role in ['dm', 'superuser']
 
+        if user.role == 'gm' and user.restaurant:
+            if employee.restaurant != user.restaurant:
+                raise PermissionDenied  # GM can only delete employees from their restaurant
+        elif user.role not in ['dm', 'superuser']:
+            raise PermissionDenied  # Only GM, DM, or Superuser can delete
+
+        return True
 
 class RestaurantListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Restaurant
@@ -82,8 +95,9 @@ class RestaurantListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'restaurants'
 
     def test_func(self):
-        # Allow only superusers and DMs to manage restaurants
-        return self.request.user.role in ['superuser', 'dm']
+        if self.request.user.role not in ['superuser', 'dm']:
+            raise PermissionDenied  # This explicitly denies access instead of just returning False
+        return True
 
 class RestaurantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Restaurant
@@ -92,17 +106,23 @@ class RestaurantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('restaurants:restaurant_list')
 
     def test_func(self):
-        return self.request.user.role in ['superuser', 'dm']
-
+        if self.request.user.role not in ['superuser', 'dm']:
+            raise PermissionDenied  # This explicitly denies access instead of just returning False
+        return True
 
 @login_required
 def restaurant_list(request):
+    if request.user.role not in ['superuser', 'dm']:
+        raise PermissionDenied  # Restrict access to unauthorized users
     restaurants = Restaurant.objects.all().order_by('name')
     gms = CustomUser.objects.filter(role='gm').order_by('first_name')
     return render(request, 'restaurants/restaurant_list.html', {'restaurants': restaurants, 'gms': gms})
 
 @login_required
 def assign_gm(request):
+    if request.user.role not in ['superuser', 'dm']:
+        raise PermissionDenied  # Prevent unauthorized access
+
     if request.method == 'POST':
         restaurant_id = request.POST.get('restaurant_id')
         gm_id = request.POST.get('gm_id')  # This can be an empty string if "None" is selected
