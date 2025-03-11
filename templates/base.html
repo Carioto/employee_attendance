@@ -24,12 +24,14 @@
                 <div class="navitems flex ">
                   {% if user.is_authenticated %}
                     {% if user.role == 'superuser' or user.role == 'dm' %}
+                      <a href="{% url 'accounts:user_setup' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">User Setup</a>
                       <a href="{% url 'restaurants:restaurant_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Restaurants</a>
                       <a href="{% url 'attendance:record_entry' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Attendance</a>
                       <a href="{% url 'restaurants:employee_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Employees</a>
                       <a href="{% url 'reports:reports_home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>
 
                     {% elif user.role == 'gm' %}
+                      <a href="{% url 'accounts:user_setup' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">User Setup</a>
                       <a href="{% url 'attendance:record_entry' %}" class="rounded-md hover:bg-gray-700 px-3 py-2 text-sm font-medium text-white">Attendance</a>
                       <a href="{% url 'restaurants:employee_list' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Employees</a>
                       <a href="{% url 'reports:reports_home' %}" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reports</a>

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="w-full text-center">
+    <h1>Create a New User</h1>
+    {% if messages %}
+    {% for message in messages %}
+        <p class="text-red-500">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+    <form method="post" class="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Create User</button>
+    </form>
+</div>
+{% endblock %}
