@@ -19,6 +19,7 @@ urlpatterns = [
     path('attendance/', include(('attendance.urls', 'attendance'), namespace='attendance')),
     path('restaurants/', include(('restaurants.urls', 'restaurants'), namespace='restaurants')),
     path('reports/', include(('reports.urls', 'reports'), namespace='reports')),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
 ]
 
 handler404 = custom_404_view

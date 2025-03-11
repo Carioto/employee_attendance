@@ -3,13 +3,6 @@
 {% block content %}
 <div class="">
   <h1>Update Restaurant</h1>
-  <style>
-    /* This will apply to all input, select, and textarea fields within the form */
-    form input, form select, form textarea {
-      background-color: #000;
-      color: #fff;
-    }
-    </style>
   <form method="post" class="text-center p-3">
     {% csrf_token %}
     {{ form.as_p }}
