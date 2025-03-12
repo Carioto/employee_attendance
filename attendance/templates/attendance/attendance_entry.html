@@ -7,7 +7,7 @@
   {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
   <!-- Date picker for GM and above -->
   <form method="get" class="mt-2 mb-4 text-center">
-    <input type="date" name="date" id="date" value="{{ selected_date|date:'Y-m-d' }}" class="border p-1 text-sm sm:text-base">
+    <input type="date" name="date" id="date" value="{{ selected_date|date:'Y-m-d' }}" class="fieldstyle border p-1 text-sm sm:text-base">
     <button type="submit" class="button text-sm sm:text-base">Go</button>
 </form>
   {% endif %}
@@ -25,7 +25,7 @@
         <thead>
           <tr class="bg-gray-200 dark:bg-gray-800">
             <th class="border py-1 sm:px-3 sm:py-2">Employee Name</th>
-            <th class="border py-1 sm:px-3 sm:py-2">Attendance Code</th>
+            <th class="border py-1 sm:px-3 sm:py-2">Attendance</th>
             <th class="border py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Comment (Optional)</th> <!-- Hidden on small screens -->
           </tr>
         </thead>
@@ -35,10 +35,10 @@
             <td class="border px-2 py-1 sm:px-3 sm:py-2 text-center dark:text-white truncate-text">
               {{ employee.first_name }} {{ employee.last_name }}
             </td>
-            <td class="border px-2 py-1 sm:px-3 sm:py-2 text-red-500 font-bold">
+            <td class="border px-2 py-1 sm:px-3 sm:py-2 text-blue-600 font-bold">
               {{ form.code }}
             </td>
-            <td class="border px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell text-center text-red-500 font-bold">
+            <td class="border px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell text-center text-blue-600 font-bold">
               {{ form.comment }}
             </td> <!-- Hidden on small screens -->
             <input type="hidden" name="form-{{ forloop.counter0 }}-employee_id" value="{{ employee.id }}">

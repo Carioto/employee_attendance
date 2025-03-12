@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mx-auto w-3/4">
+    <h2 class="text-white text-2xl font-bold text-center mb-4">Manage Users</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="bg-green-500 text-white p-2 rounded text-center mb-3">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <table class="table-auto w-full mx-auto text-center text-white">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Restaurant</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.restaurant }}</td>
+                    <td>
+                        <a class="text-blue-400" href="{% url 'accounts:edit_user' user.id %}">Edit</a> |
+                        <a class="text-green-400" href="{% url 'accounts:reset_password' user.id %}">Reset Password</a> |
+                        <a class="text-red-500" href="{% url 'accounts:delete_user' user.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

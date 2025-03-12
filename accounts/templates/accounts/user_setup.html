@@ -3,14 +3,38 @@
 {% block content %}
 <div class="w-full text-center">
     <h1>Create a New User</h1>
+    <a href="{% url 'accounts:manage_users' %}" class="button mb-2">Manage Users</a>
+
     {% if messages %}
-    {% for message in messages %}
-        <p class="text-red-500">{{ message }}</p>
-    {% endfor %}
-{% endif %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <p class="bg-green-500 p-2 mb-3">{{ message }}</p>
+            {% elif message.tags == "error" %}
+                <p class="bg-red-500 p-2 mb-3">{{ message }}</p>
+            {% else %}
+                <p class="bg-gray-500 p-2 mb-3">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
     <form method="post" class="">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+        <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <small class="text-gray-500">{{ field.help_text }}</small>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- Hidden fields to ensure role & restaurant are included in form submission -->
+    <input type="hidden" name="role" value="manager">
+    {% if user.role == "gm" and user.restaurant %}
+        <input type="hidden" name="restaurant" value="{{ user.restaurant.id }}">
+    {% endif %}
+
         <button type="submit" class="button">Create User</button>
     </form>
 </div>

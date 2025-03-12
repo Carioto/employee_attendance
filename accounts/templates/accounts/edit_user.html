@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="w-full mx-auto text-center">
+    <h2 class="text-white text-2xl font-bold text-center mb-4">Edit User: {{ target_user.username }}</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="bg-green-500 text-white p-2 rounded text-center mb-3">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" class="text-center mx-auto">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="mb-3 text-center mx-auto">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                    <small class="text-gray-500">{{ field.help_text }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save Changes</button>
+    </form>
+
+    <div class="mt-4">
+        <a href="{% url 'accounts:manage_users' %}" class="text-blue-400 hover:text-blue-600">Back to Manage Users</a>
+    </div>
+</div>
+{% endblock %}

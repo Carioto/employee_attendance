@@ -7,7 +7,7 @@
 
     <form method="GET" class="text-center p-3 no-print">
         <label for="month">Select Month:</label>
-        <input type="month" name="month" id="month" value="{{ selected_month }}" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+        <input type="month" name="month" id="month" value="{{ selected_month }}" class="fieldstyle" onchange="this.form.submit()">
     </form>
     
     {% if employees %}
@@ -15,7 +15,7 @@
         <input type="hidden" name="month" value="{{ selected_month }}">
         <input type="hidden" name="employee" value="{{ selected_employee }}">
         <label for="employee">Select Employee:</label>
-        <select name="employee" id="employee" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+        <select name="employee" id="employee" class="fieldstyle" onchange="this.form.submit()">
             <option value="">-- Select Employee --</option>
             {% for employee in employees %}
                 <option value="{{ employee.id }}" {% if selected_employee|stringformat:"s" == employee.id|stringformat:"s" %}selected{% endif %}>

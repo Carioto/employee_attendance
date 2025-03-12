@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-2xl font-bold mb-4 text-center mx-auto">
+<div class="text-2xl font-bold mb-4 w-full text-center mx-auto">
   <h1>{% if object %}Edit Employee{% else %}Add New Employee{% endif %}</h1>
-  <form class="p-2" method="post" >
+  <form class="" method="post" >
     {% csrf_token %}
     {{ form.as_p }}
     <button class="button" type="submit">Save</button>
