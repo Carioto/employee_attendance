@@ -7,7 +7,7 @@
     
     <form method="GET" class="text-center p-3 no-print">
         <label for="week">Select Week Beginning:</label>
-        <select name="week" id="week" class="m-3 text-red-500 font-bold" onchange="this.form.submit()">
+        <select name="week" id="week" class="fieldstyle font-bold" onchange="this.form.submit()">
             {% for monday in mondays %}
             <option class="p-1 text-red-500 font-bold" value="{{ monday }}" {% if monday == selected_week %} selected {% endif %}>{{ monday }}</option>
             {% endfor %}

@@ -36,7 +36,7 @@ MIT No Attribution License
 
 ## Credits
 
-This is a solo project by David Carioto
+This is a solo project by David Carioto using ChatGPT.
 
 ## Tests
 

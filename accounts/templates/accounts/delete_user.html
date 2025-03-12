@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mx-auto">
+    <h2 class="text-red-500 text-2xl font-bold mb-4">Delete User: {{ target_user.username }}</h2>
+
+    <p class="text-white mb-4">Are you sure you want to delete <strong>{{ target_user.username }}</strong>? This action cannot be undone.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Confirm Delete</button>
+        <a href="{% url 'accounts:manage_users' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Cancel</a>
+    </form>
+</div>
+{% endblock %}

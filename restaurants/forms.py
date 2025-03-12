@@ -13,11 +13,9 @@ class EmployeeForm(forms.ModelForm):
         # Apply CSS classes
         for field in self.fields:
             self.fields[field].widget.attrs.update({
-                'class': 'block border mt-3 mb-3 border-gray-300 p-2 rounded-md w-1/4 mx-auto text-center'
+                'class': 'fieldstyle'
             })
         
-        # Force width on the select dropdown
-        self.fields['restaurant'].widget.attrs.update({'style': 'width: 80%;'})
 
 
         # Filter the restaurant choices based on user role
