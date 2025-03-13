@@ -1,23 +1,21 @@
 body{
-    background-color: white; /* Equivalent to bg-white */
-    color: black; /* Equivalent to text-black */
-    font-size: 1.25rem; /* Equivalent to text-xl (20px) */
-    padding-top: 1.5rem; /* Equivalent to p-6 (24px) */
-    
-    /* Dark mode support */
+    background-color: white; 
+    color: black; 
+    font-size: 1.25rem;
+    padding-top: 1.5rem;
     @media (prefers-color-scheme: dark) {
-        background-color: black; /* Equivalent to dark:bg-black */
-        color: white; /* Equivalent to dark:text-white */
+        background-color: black;
+        color: white;
     }
 }
 
 main{
-    margin-left: auto;  /* Equivalent to mx-auto */
+    margin-left: auto;
     margin-right: auto;
-    width: 100%;  /* Equivalent to w-full */
-    padding-top: 1.5rem;  /* Equivalent to p-6 (24px) */
+    width: 100%;
+    padding-top: 1.5rem;
     display: flex;
-    align-items: center;  /* Equivalent to items-center (for flex container) */ 
+    align-items: center; 
 }
 
 h1{
@@ -25,62 +23,84 @@ h1{
     margin-right: auto;
     text-align: center;
     margin-bottom: 8px;
-    font-size: 2.25rem; /* Equivalent to text-4xl */
-    font-weight: 500; /* Equivalent to font-medium */
+    font-size: 2.25rem;
+    font-weight: 500;
     color: black;
     text-decoration: underline;
-    padding: 0.75rem; /* Equivalent to p-3 */
-
-    /* Dark mode support */
+    padding: 0.75rem;
     @media (prefers-color-scheme: dark) {
         color: white;
     }
 }
 
+.nav-link {
+    border-radius: 0.375rem; /* rounded-md */
+    padding: 0.5rem 0.75rem; /* px-3 py-2 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    color: #d1d5db; /* text-gray-300 */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Smooth hover transition */
+}
+
+.nav-link:hover {
+    background-color: #374151; /* hover:bg-gray-700 */
+    color: #ffffff; /* hover:text-white */
+}
+
+/* Mobile Bottom Navigation */
+.nav-icon {
+    color: #d1d5db; /* text-gray-300 */
+    font-size: 1.5rem; /* Make icons larger */
+    padding: 0.75rem;
+    transition: color 0.2s ease;
+}
+
+.nav-icon:hover {
+    color: #ffffff; /* hover:text-white */
+}
+
 table{
     margin-left: auto;
     margin-right: auto;
-    table-layout: auto; /* Equivalent to table-auto */
-    border-collapse: separate; /* Equivalent to border-separate */
-    border-spacing: 0.5rem; /* Equivalent to border-spacing-2 (2 * 0.25rem = 0.5rem) */
-    border: 1px solid #9ca3af; /* Equivalent to border-gray-400 */
-    padding: 0.5rem; /* Equivalent to p-2 */
-
-    /* Dark mode support */
+    table-layout: auto;
+    border-collapse: separate;
+    border-spacing: 0.5rem;
+    border: 1px solid #9ca3af;
+    padding: 0.5rem;
     @media (prefers-color-scheme: dark) {
-        border-color: #6b7280; /* Equivalent to border-gray-500 */
+        border-color: #6b7280;
     }
+}
+
+th,td{
+        border: 1px solid #d1d5db;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
 }
 #id_username, #id_email,#id_password, #id_new_password, .fieldstyle {
     display: block;
-    background-color: #3699db; /* Tailwind's gray-100 */
-    color: #1a202c;            /* Tailwind's gray-900 */
-    border: 1px solid #cbd5e0; /* Tailwind's gray-300 */
+    background-color: #cbd5e0; 
+    color: #1a202c;            
+    border: 1px solid #cbd5e0; 
     padding: 0.5rem;
     border-radius: 0.375rem;
-    width: 15%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
   }
 
-    /* This will apply to all input, select, and textarea fields within the form */
-/* form input, form select, form textarea{
-      background-color: #000;
-      color: #fff;
-  } */
  .button {
-    background-color: #0ea5e9; /* Equivalent to bg-sky-500 */
-    border-radius: 9999px; /* Equivalent to rounded-full */
-    padding-left: 0.75rem; /* Equivalent to pl-3 */
-    padding-right: 0.75rem; /* Equivalent to pr-3 */
-    padding-bottom: 0.25rem; /* Equivalent to pb-1 */
-    margin-top: 0.5rem; /* Equivalent to mt-2 */
-    transition: background-color 0.3s ease; /* Smooth transition for hover */
+    background-color: #0ea5e9;
+    border-radius: 9999px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-bottom: 0.25rem;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0369a1; /* Equivalent to hover:bg-sky-700 */
+    background-color: #0369a1;
 }
 
 .login-container {
@@ -89,9 +109,7 @@ button:hover {
     text-align: center;
 }
 
-/* Style input fields */
 .login-container input {
-    width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -108,66 +126,30 @@ footer{
             display: none !important;
         }
     }
-/* Mobile Screens (Phones) */
-@media (max-width: 600px) {
+
+@media (max-width: 640px) {
     h1 {
         font-size: 1.25rem;
     }
 
-    /* Stack navbar items vertically */
     .navitems {
         flex-direction: column;
         align-items: center;
-        gap: 10px; /* Adds spacing between links */
+        gap: 10px;
     }
     main{
         padding-top: 0
 
     }
 
-    /* Ensure the navbar container is flexible */
-    .navcont {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 80%;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 5px 0;
-        border-radius: 10px;
-        min-height: fit-content; /* Dynamically adjust height */
-    }
-
-    /* Navbar border container */
-    .navbord {
-        width: 50% !important;
-        max-width: 400px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Fix link spacing */
-    .navitems a {
-        display: block;
-        width: 100%;
-        padding: 10px 15px;
-        text-align: center;
-    }
-
-    /* Remove bottom border from the last link */
-    .navitems a:last-child {
-        border-bottom: none;
-    }
     footer{
-        font-size: .75rem;
+        font-size: .5rem;
     }
     .footimg{
-        height: 20px;
+        height: 10px;
     }
     .foothold{
-        height: 20px;
+        height: 10px;
 
     }
     .login-container {

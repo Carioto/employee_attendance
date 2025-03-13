@@ -12,28 +12,24 @@
 
   <!-- Responsive Table Wrapper -->
   <div class="overflow-x-auto">
-    <table class="w-full text-sm sm:text-base">
+    <table class="w-3/4 text-sm sm:text-base">
       <thead>
         <tr class="">
-          <th class="bg-gray-200 dark:bg-gray-800">First Name</th>
-          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2">Last Name</th>
-          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Restaurant</th> <!-- Hides on small screens -->
-          <th class="border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 px-2 py-1 sm:px-3 sm:py-2">Actions</th>
+          <th class="bg-gray-200 dark:bg-gray-800 sm:px-3 sm:py-2">Name</th>
+          <th class="bg-gray-200 dark:bg-gray-800 sm:px-3 sm:py-2 hidden sm:table-cell">Restaurant</th> <!-- Hides on small screens -->
+          <th class="bg-gray-200 dark:bg-gray-800 sm:px-3 sm:py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for employee in employees %}
         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-          <td class="border border-gray-300 dark:border-gray-700 text-center px-2 py-1 sm:px-3 sm:py-2 truncate-text">
-            {{ employee.first_name }}
+          <td class="text-center sm:px-3 sm:py-2 truncate-text">
+            {{ employee.first_name }} {{ employee.last_name }}       
           </td>
-          <td class="border border-gray-300 dark:border-gray-700 text-center px-2 py-1 sm:px-3 sm:py-2 truncate-text">
-            {{ employee.last_name }}
-          </td>
-          <td class="border border-gray-300 dark:border-gray-700 text-center px-2 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">
+          <td class="sm:px-3 sm:py-2 hidden sm:table-cell">
             {{ employee.restaurant }}
           </td> <!-- Hides on small screens -->
-          <td class="border border-gray-300 dark:border-gray-700 text-center px-2 py-1 sm:px-3 sm:py-2">
+          <td class="sm:px-3 sm:py-2">
             <a class="btn btn-sm text-blue-600 hover:text-blue-800 font-medium" href="{% url 'restaurants:employee_update' employee.pk %}">Edit</a>
             <span class="hidden sm:inline"> | </span> <!-- Hide divider on mobile -->
             <a class="btn btn-sm text-red-600 hover:text-red-800 font-medium" href="{% url 'restaurants:employee_delete' employee.pk %}">Delete</a>

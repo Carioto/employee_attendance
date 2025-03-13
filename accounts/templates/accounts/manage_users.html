@@ -10,13 +10,14 @@
         {% endfor %}
     {% endif %}
 
-    <table class="table-auto w-full mx-auto text-center text-white">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm sm:text-base">
         <thead>
             <tr>
-                <th>Username</th>
+                <th class="hidden sm:table-cell">Username</th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th class="hidden sm:table-cell">Email</th>
+                <th class="hidden sm:table-cell">Role</th>
                 <th>Restaurant</th>
                 <th>Actions</th>
             </tr>
@@ -24,10 +25,10 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.username }}</td>
+                    <td class="hidden sm:table-cell">{{ user.username }}</td>
                     <td>{{ user.first_name }} {{ user.last_name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.role }}</td>
+                    <td class="hidden sm:table-cell">{{ user.email }}</td>
+                    <td class="hidden sm:table-cell">{{ user.role }}</td>
                     <td>{{ user.restaurant }}</td>
                     <td>
                         <a class="text-blue-400" href="{% url 'accounts:edit_user' user.id %}">Edit</a> |
@@ -38,5 +39,6 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 </div>
 {% endblock %}

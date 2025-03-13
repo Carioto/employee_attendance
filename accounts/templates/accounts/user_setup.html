@@ -1,41 +1,77 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="w-full text-center">
-    <h1>Create a New User</h1>
-    <a href="{% url 'accounts:manage_users' %}" class="button mb-2">Manage Users</a>
+<div class="w-full max-w-lg mx-auto text-center px-4">
+    <h1 class="text-2xl font-bold mb-4">Create a New User</h1>
+    <a href="{% url 'accounts:manage_users' %}" class="button mb-4">Manage Users</a>
 
     {% if messages %}
         {% for message in messages %}
             {% if message.tags == "success" %}
-                <p class="bg-green-500 p-2 mb-3">{{ message }}</p>
+                <p class="bg-green-500 text-white p-2 rounded mb-3">{{ message }}</p>
             {% elif message.tags == "error" %}
-                <p class="bg-red-500 p-2 mb-3">{{ message }}</p>
+                <p class="bg-red-500 text-white p-2 rounded mb-3">{{ message }}</p>
             {% else %}
-                <p class="bg-gray-500 p-2 mb-3">{{ message }}</p>
+                <p class="bg-gray-500 text-white p-2 rounded mb-3">{{ message }}</p>
             {% endif %}
         {% endfor %}
     {% endif %}
 
-    <form method="post" class="">
+    <form method="post" class="space-y-4">
         {% csrf_token %}
-        {% for field in form %}
-        <div class="mb-3">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-                <small class="text-gray-500">{{ field.help_text }}</small>
-            {% endif %}
+
+        <!-- First Name & Last Name (Stack on Mobile, Side-by-Side on Desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+            <div>
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
         </div>
-    {% endfor %}
 
-    <!-- Hidden fields to ensure role & restaurant are included in form submission -->
-    <input type="hidden" name="role" value="manager">
-    {% if user.role == "gm" and user.restaurant %}
-        <input type="hidden" name="restaurant" value="{{ user.restaurant.id }}">
-    {% endif %}
+        <!-- Username & Email (Stack on Mobile, Side-by-Side on Desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+        </div>
 
-        <button type="submit" class="button">Create User</button>
+        <!-- Role & Restaurant (Stack on Mobile, Side-by-Side on Desktop) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                {{ form.role.label_tag }}
+                {{ form.role }}
+            </div>
+            <div>
+                {{ form.restaurant.label_tag }}
+                {{ form.restaurant }}
+            </div>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+
+        <!-- Hidden fields for GM auto-assigning manager -->
+        <input type="hidden" name="role" value="manager">
+        {% if user.role == "gm" and user.restaurant %}
+            <input type="hidden" name="restaurant" value="{{ user.restaurant.id }}">
+        {% endif %}
+
+        <!-- Submit Button -->
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 w-1/2">
+            Create User
+        </button>
     </form>
 </div>
 {% endblock %}
