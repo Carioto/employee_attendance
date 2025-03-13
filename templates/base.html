@@ -48,21 +48,20 @@
       <!-- Mobile Bottom Navigation -->
       <div class="fixed bottom-0 left-0 w-full bg-gray-900 p-2 flex justify-around items-center sm:hidden">
           {% if user.is_authenticated %}
-              <a href="{% url 'accounts:user_setup' %}" class="nav-icon">
-                  <i class="fas fa-user-plus"></i>
-              </a>
-              <a href="{% url 'restaurants:restaurant_list' %}" class="nav-icon">
-                  <i class="fas fa-utensils"></i>
-              </a>
-              <a href="{% url 'attendance:record_entry' %}" class="nav-icon">
-                  <i class="fas fa-calendar-check"></i>
-              </a>
-              <a href="{% url 'restaurants:employee_list' %}" class="nav-icon">
-                  <i class="fas fa-users"></i>
-              </a>
-              <a href="{% url 'reports:reports_home' %}" class="nav-icon">
-                  <i class="fas fa-chart-bar"></i>
-              </a>
+            {% if user.role == 'superuser' or user.role == 'dm' %}
+              <a href="{% url 'accounts:user_setup' %}" class="nav-icon"><i class="fas fa-user-plus"></i></a>
+              <a href="{% url 'restaurants:restaurant_list' %}" class="nav-icon"><i class="fas fa-building"></i></a>
+              <a href="{% url 'attendance:record_entry' %}" class="nav-icon"><i class="fas fa-calendar-check"></i></a>
+              <a href="{% url 'restaurants:employee_list' %}" class="nav-icon"><i class="fas fa-users"></i> </a>
+              <a href="{% url 'reports:reports_home' %}" class="nav-icon"><i class="fas fa-chart-bar"></i></a>
+            {% elif user.role == 'gm' %}
+              <a href="{% url 'attendance:record_entry' %}" class="nav-icon"><i class="fas fa-calendar-check"></i></a>
+              <a href="{% url 'restaurants:employee_list' %}" class="nav-icon"><i class="fas fa-users"></i> </a>
+              <a href="{% url 'reports:reports_home' %}" class="nav-icon"><i class="fas fa-chart-bar"></i></a>
+            {% elif user.role == 'manager' %}
+              <a href="{% url 'attendance:record_entry' %}" class="nav-icon"><i class="fas fa-calendar-check"></i></a>
+              <a href="{% url 'reports:reports_home' %}" class="nav-icon"><i class="fas fa-chart-bar"></i></a>
+            {% endif %}
               <form action="{% url 'logout' %}" method="post">
                   {% csrf_token %}
                   <button type="submit" class="nav-icon">
