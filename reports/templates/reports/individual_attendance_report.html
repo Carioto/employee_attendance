@@ -41,21 +41,21 @@
     </h2>
     
     
-    <table class="border-collapse w-1/2 border border-gray-300">
+    <table class="w-1/2">
         <thead>
             <tr class="bg-gray-200 text-black">
-                <th class="border border-gray-400 p-2">Date</th>
-                <th class="border border-gray-400 p-2">Attendance Code</th>
-                <th class="border border-gray-400 p-2">Comment</th>
+                <th class="">Date</th>
+                <th class="">Attendance Code</th>
+                <th class="">Comment</th>
             </tr>
         </thead>
         <tbody>
             {% for day in days_in_month %}
             <tr>
-                <td class="border border-gray-400 p-2">{{ selected_month }}-{{ day }}</td>
+                <td class="">{{ selected_month }}-{{ day }}</td>
                 {% with record=attendance_data|get_item:day %}
-                    <td class="border border-gray-400 p-2 text-center">{{ record.code|default:"-" }}</td>
-                    <td class="border border-gray-400 p-2 text-center">{{ record.comment|default:"-" }}</td>
+                    <td class="">{{ record.code|default:"-" }}</td>
+                    <td class="">{{ record.comment|default:"-" }}</td>
                 {% endwith %}
             </tr>
             {% endfor %}

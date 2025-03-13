@@ -9,27 +9,27 @@
     <table class="w-full text-sm sm:text-base">
       <thead>
         <tr class="bg-gray-200 dark:bg-gray-800">
-          <th class="border border-gray-300 dark:border-gray-600 py-1 sm:px-3 sm:py-2">Name</th>
-          <th class="border border-gray-300 dark:border-gray-600 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">Address</th> <!-- Hides on small screens -->
-          <th class="border border-gray-300 dark:border-gray-600 py-1 sm:px-3 sm:py-2">Assigned GM</th>
-          <th class="border border-gray-300 dark:border-gray-600 py-1 sm:px-3 sm:py-2">Actions</th>
+          <th class="sm:px-3 sm:py-2">Name</th>
+          <th class="sm:px-3 sm:py-2 hidden sm:table-cell">Address</th> <!-- Hides on small screens -->
+          <th class="sm:px-3 sm:py-2">Assigned GM</th>
+          <th class="sm:px-3 sm:py-2">Actions</th>
         </tr>
       </thead>
       <tbody>
         {% for restaurant in restaurants %}
         <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-          <td class="border border-gray-300 dark:border-gray-700 py-1 sm:px-3 sm:py-2 truncate-text">
+          <td class="sm:px-3 sm:py-2 truncate-text">
             {{ restaurant.name }}
           </td>
-          <td class="border border-gray-300 dark:border-gray-700 py-1 sm:px-3 sm:py-2 hidden sm:table-cell">
+          <td class="sm:px-3 sm:py-2 hidden sm:table-cell">
             {{ restaurant.address }}
           </td> <!-- Hides on small screens -->
-          <td class="border border-gray-300 dark:border-gray-700 py-1 sm:px-3 sm:py-2">
+          <td class="sm:px-3 sm:py-2">
             {{ restaurant.gm|default:"None" }}
           </td>
-          <td class="border border-gray-300 dark:border-gray-700 text-center py-1 sm:px-3 sm:py-2">
+          <td class="sm:px-3 sm:py-2">
             <button type="button"
-              class="assign-gm-button button text-blue-600 hover:text-blue-800 font-medium"
+              class="button"
               data-restaurant-id="{{ restaurant.id }}"
               data-restaurant-name="{{ restaurant.name }}"
               data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">
@@ -56,8 +56,8 @@
     const gmSelect = document.getElementById('gmSelect');
     const cancelButton = document.getElementById('modalCancelButton');
 
-    document.querySelectorAll('.assign-gm-button').forEach(function(button){
-        button.addEventListener('click', function(){
+  document.querySelectorAll('.assign-gm-button').forEach(function(button){
+            button.addEventListener('click', function(){
             const restaurantId = button.getAttribute('data-restaurant-id');
             const restaurantName = button.getAttribute('data-restaurant-name');
             const assignedGmId = button.getAttribute('data-restaurant-gm');
