@@ -47,11 +47,13 @@
   
       <!-- Mobile Bottom Navigation -->
       <div class="fixed bottom-0 left-0 w-full bg-gray-900 p-2 flex justify-around items-center sm:hidden">
+        {% if user.is_authenticated %}
         <div>
           <span class="mobile_user">
             logged in as {{ user.first_name }} {{user.last_name}}
           </span>
         </div>
+        {% endif %}
           {% if user.is_authenticated %}
             {% if user.role == 'superuser' or user.role == 'dm' %}
               <a href="{% url 'accounts:user_setup' %}" class="nav-icon"><i class="fas fa-user-plus"></i></a>
