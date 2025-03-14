@@ -47,6 +47,11 @@
   
       <!-- Mobile Bottom Navigation -->
       <div class="fixed bottom-0 left-0 w-full bg-gray-900 p-2 flex justify-around items-center sm:hidden">
+        <div>
+          <span class="mobile_user">
+            logged in as {{ user.first_name }} {{user.last_name}}
+          </span>
+        </div>
           {% if user.is_authenticated %}
             {% if user.role == 'superuser' or user.role == 'dm' %}
               <a href="{% url 'accounts:user_setup' %}" class="nav-icon"><i class="fas fa-user-plus"></i></a>
@@ -54,7 +59,8 @@
               <a href="{% url 'attendance:record_entry' %}" class="nav-icon"><i class="fas fa-calendar-check"></i></a>
               <a href="{% url 'restaurants:employee_list' %}" class="nav-icon"><i class="fas fa-users"></i> </a>
               <a href="{% url 'reports:reports_home' %}" class="nav-icon"><i class="fas fa-chart-bar"></i></a>
-            {% elif user.role == 'gm' %}
+              {% elif user.role == 'gm' %}
+              <a href="{% url 'accounts:user_setup' %}" class="nav-icon"><i class="fas fa-user-plus"></i></a>
               <a href="{% url 'attendance:record_entry' %}" class="nav-icon"><i class="fas fa-calendar-check"></i></a>
               <a href="{% url 'restaurants:employee_list' %}" class="nav-icon"><i class="fas fa-users"></i> </a>
               <a href="{% url 'reports:reports_home' %}" class="nav-icon"><i class="fas fa-chart-bar"></i></a>
@@ -80,8 +86,8 @@
         {% block content %}{% endblock %}
     </main>
     <footer>
-      <div class="fixed bottom-0 left-0 right-0 h-10 flex justify-center items-center bg-gray-800 foothold">
-        <img src="{% static 'images/logo.png' %}" alt="Site Logo" class="footimg mr-2 h-10" />
+      <div class="fixed bottom-0 left-0 right-0 h-5 flex justify-center items-center bg-gray-800 foothold">
+        <img src="{% static 'images/logo.png' %}" alt="Site Logo" class="footimg mr-2 h-5" />
         <span class="footnote text-white">
           This app created by David Carioto
         </span>
