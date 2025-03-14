@@ -14,18 +14,12 @@ def user_setup(request):
         raise PermissionDenied
 
     if request.method == 'POST':
-        print("POST Data:", request.POST)  # Debugging: Ensure role & restaurant are received
-
         form = UserSetupForm(request.POST, user=request.user)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
-
-            # Debugging
-            print("Received Role:", user.role)
-            print("Received Restaurant:", form.cleaned_data.get('restaurant'))
 
             # Restrict GM to only creating manager accounts
             if request.user.role == 'gm':
@@ -70,8 +64,12 @@ def manage_users(request):
         users = User.objects.filter(restaurant=user.restaurant)
     else:
         raise PermissionDenied  # Other users cannot access this page
+    context = {
+        'gm':user,
+        'users':users
+    }
 
-    return render(request, 'accounts/manage_users.html', {'users': users})
+    return render(request, 'accounts/manage_users.html', context)
 
 @login_required
 def edit_user(request, user_id):

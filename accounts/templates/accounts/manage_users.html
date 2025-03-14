@@ -9,7 +9,7 @@
             <p class="bg-green-500 text-white p-2 rounded text-center mb-3">{{ message }}</p>
         {% endfor %}
     {% endif %}
-
+{{gm}}
   <div class="overflow-x-auto">
     <table class="w-full text-sm sm:text-base">
         <thead>
@@ -32,8 +32,11 @@
                     <td>{{ user.restaurant }}</td>
                     <td>
                         <a class="text-blue-400" href="{% url 'accounts:edit_user' user.id %}">Edit</a> |
-                        <a class="text-green-400" href="{% url 'accounts:reset_password' user.id %}">Reset Password</a> |
+                        <a class="text-green-400" href="{% url 'accounts:reset_password' user.id %}">Reset Password</a> 
+                        {% if gm.username != user.username %}
+                        |
                         <a class="text-red-500" href="{% url 'accounts:delete_user' user.id %}">Delete</a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

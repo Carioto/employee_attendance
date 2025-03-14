@@ -141,6 +141,13 @@ footer{
         padding-top: 0
 
     }
+    .mobile_user{
+        font-size: .5rem;
+        position: fixed;
+        bottom: 4rem;
+        left: 35%;
+
+    }
 
     footer{
         font-size: .5rem;
