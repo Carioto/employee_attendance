@@ -41,7 +41,7 @@
               <a href="{% url 'login' %}" class="nav-link">Login</a>
           {% endif %}
           {% if user.is_authenticated %}
-          <span class="fixed right-8 text-sm font-medium text-gray-300 hidden lg:block">logged in as {{ user.first_name }} {{user.last_name}}</span>
+          <span class="absolute right-10 text-sm font-medium text-gray-300 hidden lg:block">logged in as {{ user.first_name }} {{user.last_name}}</span>
           {% endif %}
       </div>
   
@@ -95,31 +95,6 @@
         </span>
       </div>
     </footer>
-    
-    <div id="gmModal" class="fixed top-0 right-0 left-0 bottom-0 inset-0 z-50 flex items-center justify-center hidden">
-      <div class="bg-gray-800 p-6 rounded-lg w-11/12 max-w-lg">
-        <h3 class="text-xl font-bold mb-4">
-          Assign GM to <span id="modalRestaurantName"></span>
-        </h3>
-        <form id="assignGmForm" method="post" action="{% url 'restaurants:assign_gm' %}">
-          {% csrf_token %}
-          <input type="hidden" name="restaurant_id" id="modalRestaurantId">
-          <div class="mb-4">
-            <label for="gmSelect" class="block mb-1">Select GM:</label>
-            <select name="gm_id" id="gmSelect" class="w-full p-2 border rounded">
-              <option class="text-white" value="">None</option> <!-- Option for no GM -->
-              {% for gm in gms %}
-              <option class="text-white" value="{{ gm.id }}">{{ gm.first_name }} {{ gm.last_name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="flex justify-end">
-            <button type="button" id="modalCancelButton" class="mr-2 px-3 py-2 bg-gray-500 text-white rounded">Cancel</button>
-            <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded">Save</button>
-          </div>
-        </form>
-      </div>
-    </div>
 </body>
 <script src="{% static 'js/script.js' %}"></script>
 </html>

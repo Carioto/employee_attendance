@@ -7,8 +7,7 @@
   {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
   <!-- Date picker for GM and above -->
   <form method="get" class="mt-2 mb-4 text-center">
-    <input type="date" name="date" id="date" value="{{ selected_date|date:'Y-m-d' }}" class="fieldstyle border p-1 text-sm sm:text-base">
-    <button type="submit" class="button text-sm sm:text-base">Go</button>
+    <input type="date" name="date" id="date" value="{{ selected_date|date:'Y-m-d' }}" class="fieldstyle border p-1 text-sm sm:text-base"  onchange="this.form.submit()">
 </form>
   {% endif %}
   <div class="text-center">
