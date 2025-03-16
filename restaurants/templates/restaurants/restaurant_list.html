@@ -29,7 +29,7 @@
           </td>
           <td class="sm:px-3 sm:py-2">
             <button type="button"
-              class="button"
+              class="button assign-gm-button"
               data-restaurant-id="{{ restaurant.id }}"
               data-restaurant-name="{{ restaurant.name }}"
               data-restaurant-gm="{{ restaurant.gm.id|default:'None' }}">
@@ -44,6 +44,30 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+</div>
+<div id="gmModal" class="fixed top-0 right-0 left-0 bottom-0 inset-0 z-50 flex items-center justify-center hidden">
+  <div class="bg-gray-800 p-6 rounded-lg w-11/12 max-w-lg">
+    <h3 class="text-xl font-bold mb-4">
+      Assign GM to <span id="modalRestaurantName"></span>
+    </h3>
+    <form id="assignGmForm" method="post" action="{% url 'restaurants:assign_gm' %}">
+      {% csrf_token %}
+      <input type="hidden" name="restaurant_id" id="modalRestaurantId">
+      <div class="mb-4">
+        <label for="gmSelect" class="block mb-1">Select GM:</label>
+        <select name="gm_id" id="gmSelect" class="w-full p-2 border rounded text-black">
+          <option value="">None</option> <!-- Option for no GM -->
+          {% for gm in gms %}
+          <option value="{{ gm.id }}">{{ gm.first_name }} {{ gm.last_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="flex justify-end">
+        <button type="button" id="modalCancelButton" class="mr-2 px-3 py-2 bg-gray-500 text-white rounded">Cancel</button>
+        <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded">Save</button>
+      </div>
+    </form>
   </div>
 </div>
 
