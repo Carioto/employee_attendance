@@ -11,7 +11,7 @@ class UserSetupForm(forms.ModelForm):
     restaurant = forms.ModelChoiceField(
         queryset=Restaurant.objects.all(),
         required=False,  # Allow None for superusers/DMs, but GMs will get auto-assigned
-        widget=forms.Select(attrs={'class': 'fieldstyle'})
+        widget=forms.Select(attrs={'class': 'fieldstyle w-3/4'})
     )
 
     def __init__(self, *args, **kwargs):
@@ -42,7 +42,7 @@ class UserSetupForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'fieldstyle'}),
             'last_name': forms.TextInput(attrs={'class': 'fieldstyle'}),
             'email': forms.EmailInput(attrs={'class': 'fieldstyle'}),
-            'role': forms.Select(attrs={'class': 'fieldstyle'}),
+            'role': forms.Select(attrs={'class': 'fieldstyle w-3/4'}),
             'restaurant': forms.Select(attrs={'class': 'fieldstyle'}),
         }
 

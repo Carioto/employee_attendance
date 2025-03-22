@@ -835,10 +835,6 @@ select {
   left: 0px;
 }
 
-.left-1 {
-  left: 0.25rem;
-}
-
 .left-1\/2 {
   left: 50%;
 }
@@ -847,24 +843,16 @@ select {
   right: 0px;
 }
 
+.right-10 {
+  right: 2.5rem;
+}
+
 .top-0 {
   top: 0px;
 }
 
 .top-1\/2 {
   top: 50%;
-}
-
-.right-5 {
-  right: 1.25rem;
-}
-
-.right-8 {
-  right: 2rem;
-}
-
-.right-10 {
-  right: 2.5rem;
 }
 
 .z-50 {
@@ -954,6 +942,10 @@ select {
 
 .h-screen {
   height: 100vh;
+}
+
+.min-h-\[56px\] {
+  min-height: 56px;
 }
 
 .w-1\/2 {

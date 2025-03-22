@@ -61,7 +61,10 @@ def manage_users(request):
         users = User.objects.filter(restaurant__in=user.restaurants.all())  # Assuming DM has multiple restaurants
     # GMs can see only their restaurant users
     elif user.role == 'gm':
-        users = User.objects.filter(restaurant=user.restaurant)
+         # Block GMs with no assigned restaurant
+        if user.restaurant == None:
+            messages.error(request, "You must be assigned to a restaurant to manage users.")
+            return redirect('accounts:user_setup')  # or redirect to a safe page
     else:
         raise PermissionDenied  # Other users cannot access this page
     context = {
