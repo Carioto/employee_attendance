@@ -29,7 +29,15 @@
                     <td class="hidden sm:table-cell p-1">{{ employee.total_present }}</td>
                     <td class="hidden sm:table-cell p-1">{{ employee.total_absent }}</td>
                     <td class="hidden sm:table-cell p-1">{{ employee.total_late }}</td>
-                    <td class="p-1">{{ employee.percent_compliant }}%</td>
+                    <td class="border border-gray-400 p-2 text-center">
+                        {% if employee.percent_compliant >= 90 %}
+                            ✅ {{ employee.percent_compliant }}%
+                        {% elif employee.percent_compliant >= 75 %}
+                            ⚠️ {{ employee.percent_compliant }}%
+                        {% else %}
+                            ❌ {{ employee.percent_compliant }}%
+                        {% endif %}
+                    </td> 
                 </tr>
                 {% empty %}
                 <tr>

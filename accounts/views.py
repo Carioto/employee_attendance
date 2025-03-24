@@ -65,6 +65,7 @@ def manage_users(request):
         if user.restaurant == None:
             messages.error(request, "You must be assigned to a restaurant to manage users.")
             return redirect('accounts:user_setup')  # or redirect to a safe page
+        users = User.objects.filter(restaurant=user.restaurant)
     else:
         raise PermissionDenied  # Other users cannot access this page
     context = {

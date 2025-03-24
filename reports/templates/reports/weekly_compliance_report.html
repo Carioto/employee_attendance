@@ -38,8 +38,26 @@
                     {% for employee in employees %}
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                         <td class="border border-gray-400 p-2">{{ employee.name }}</td>
-                        <td class="border border-gray-400 p-2 text-center">{{ employee.weekly_compliance }}%</td>
-                        <td class="border border-gray-400 p-2 text-center">{{ employee.point_total }}</td>
+                        <td class="border border-gray-400 p-2 text-center">
+                            {% if employee.weekly_compliance >= 90 %}
+                                ✅ {{ employee.weekly_compliance }}%
+                            {% elif employee.weekly_compliance >= 75 %}
+                                ⚠️ {{ employee.weekly_compliance }}%
+                            {% else %}
+                                ❌ {{ employee.weekly_compliance }}%
+                            {% endif %}
+                        </td>                        
+                        <td class="border border-gray-400 p-2 text-center text-lg">
+                            {% if employee.point_total < 0 %}
+                                ⭐ {{ employee.point_total }}
+                            {% elif employee.point_total <= 1 %}
+                                ✅ {{ employee.point_total }}
+                            {% elif employee.point_total <= 4 %}
+                                ⚠️ {{ employee.point_total }}
+                            {% else %}
+                                ❌ {{ employee.point_total }}
+                            {% endif %}
+                        </td>                        
                         {% for day in employee.codes.values %}
                         <td class="border border-gray-400 p-2 text-center hidden sm:table-cell relative">
                             {{ day.code }}

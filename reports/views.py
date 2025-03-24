@@ -67,7 +67,7 @@ def weekly_compliance_report(request):
     for employee in employees.values():
         total_days = sum(1 for day in employee['codes'].values() if day['code'])
         present_days = sum(1 for day in employee['codes'].values() if day['code'] == 'P' or day['code'] == 'HRO')
-        employee['weekly_compliance'] = round((present_days / total_days) * 100, 2) if total_days else 0
+        employee['weekly_compliance'] = round((present_days / total_days) * 100) if total_days else 0
     
     # Sort employees alphabetically by first name
     sorted_employees = sorted(employees.values(), key=lambda x: x['first_name'].lower())
@@ -113,7 +113,7 @@ def monthly_attendance_summary(request):
         
     for employee in employees.values():
         if employee['total_scheduled'] > 0:
-            employee['percent_compliant'] = round((employee['total_present'] / employee['total_scheduled']) * 100, 2)
+            employee['percent_compliant'] = round((employee['total_present'] / employee['total_scheduled']) * 100)
         
     sorted_employees = sorted(employees.values(), key=lambda x: x['first_name'].lower())
     

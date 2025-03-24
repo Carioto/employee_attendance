@@ -38,7 +38,7 @@
                   <button type="submit" class="nav-link">Logout</button>
               </form>
           {% else %}
-              <a href="{% url 'login' %}" class="nav-link">Login</a>
+              <a href="{% url 'login' %}" class="nav-link hidden">Login</a>
           {% endif %}
           {% if user.is_authenticated %}
           <span class="absolute right-10 text-sm font-medium text-gray-300 hidden lg:block">logged in as {{ user.first_name }} {{user.last_name}}</span>

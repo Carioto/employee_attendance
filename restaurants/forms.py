@@ -13,7 +13,7 @@ class EmployeeForm(forms.ModelForm):
         # Apply CSS classes
         for field in self.fields:
             self.fields[field].widget.attrs.update({
-                'class': 'fieldstyle'
+                'class': 'fieldstyle w-3/4'
             })
         
 
