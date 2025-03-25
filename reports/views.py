@@ -32,12 +32,12 @@ def weekly_compliance_report(request):
     selected_week = request.GET.get('week', mondays[0])  # Default to most recent Monday
     start_date = datetime.strptime(selected_week, '%Y-%m-%d')
     end_date = start_date + timedelta(days=6)
-    three_months_ago = start_date - timedelta(days=90)
+    two_months_ago = start_date - timedelta(days=60)
     
     # Fetch attendance records for the selected week
     weekly_attendance = AttendanceRecord.objects.filter(date__range=[start_date, end_date])
     # Fetch attendance records for the past 3 months
-    three_months_attendance = AttendanceRecord.objects.filter(date__range=[three_months_ago, end_date])
+    two_months_attendance = AttendanceRecord.objects.filter(date__range=[two_months_ago, end_date])
     
     employees = {}
     
@@ -59,7 +59,7 @@ def weekly_compliance_report(request):
         }
     
     # Calculate 3-month point total
-    for entry in three_months_attendance:
+    for entry in two_months_attendance:
         if entry.employee.id in employees and entry.code in ATTENDANCE_POINTS:
             employees[entry.employee.id]['point_total'] += ATTENDANCE_POINTS[entry.code]
     

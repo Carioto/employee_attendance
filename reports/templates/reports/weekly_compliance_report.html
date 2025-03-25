@@ -3,7 +3,7 @@
 {% block content %}
 <div class="mx-auto w-full max-w-5xl sm:px-4" id="printableReport">
 
-    <h1 class="text-center text-xl sm:text-2xl font-bold">Weekly Compliance Report</h1>
+    <h1 class="text-center text-xl sm:text-2xl font-bold">Weekly Attendance Compliance Report</h1>
     
     <form method="GET" class="text-center p-3 no-print">
         <label for="week">Select Week Beginning:</label>
@@ -24,7 +24,7 @@
                     <tr class="bg-gray-200 text-black">
                         <th class="sm:p-2">Employee</th>
                         <th class="sm:p-2 text-center">Weekly %</th>
-                        <th class="sm:p-2 text-center">3-Month Pts</th>
+                        <th class="sm:p-2 text-center">Points - 2 Month</th>
                         <th class="hidden sm:table-cell sm:p-2 text-center">Monday</th>
                         <th class="hidden sm:table-cell sm:p-2 text-center">Tuesday</th>
                         <th class="hidden sm:table-cell sm:p-2 text-center">Wednesday</th>
@@ -37,8 +37,8 @@
                 <tbody>
                     {% for employee in employees %}
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                        <td class="border border-gray-400 p-2">{{ employee.name }}</td>
-                        <td class="border border-gray-400 p-2 text-center">
+                        <td class="border border-gray-400 p-1">{{ employee.name }}</td>
+                        <td class="border border-gray-400 p-1 text-center text-lg">
                             {% if employee.weekly_compliance >= 90 %}
                                 ✅ {{ employee.weekly_compliance }}%
                             {% elif employee.weekly_compliance >= 75 %}
@@ -59,7 +59,7 @@
                             {% endif %}
                         </td>                        
                         {% for day in employee.codes.values %}
-                        <td class="border border-gray-400 p-2 text-center hidden sm:table-cell relative">
+                        <td class="border border-gray-400 p-2 text-center hidden sm:table-cell relative font-bold">
                             {{ day.code }}
                             {% if day.comment %}
                             <span class="ml-1 text-blue-500 cursor-pointer" title="{{ day.comment }}">&#9733;</span>
