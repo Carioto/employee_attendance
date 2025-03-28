@@ -2,7 +2,7 @@
 ![License:MIT](https://img.shields.io/badge/License-MIT-blue)
 
 ## Description
-This project will allow multiple people from multiple facilities track employee attendance.
+This project will allow multiple people from multiple facilities track employee attendance in each individual facility.  The design will allow for GMs to create managers for that facility and to manage employees.  All levels have the ability to enter daily compliance, GMs can modify any prior day compliance. Reports are available for all.  A DM feature is planned to allow DMs to create GMs and assign them to any facility the DM has assigned to them.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ This project is available online with no installation required
 
 ## Usage
 
-Log in with the test gm listed below, use the navigation to add employees, enter daily attendance records, and print reports.
+Log in with the test GM listed below, use the navigation to add managers for attendance recording, add employees, enter daily attendance records, and view and print various reports.
 
 ## License
 
@@ -40,7 +40,7 @@ This is a solo project by David Carioto using ChatGPT.
 
 ## Tests
 
-log in with user 'DemoGM' and password 'DemoPass#1' to use GM functionality of DemoRestaurant
+log in with user 'testGM' and password 'testgmpassword' to use GM functionality of DemoRestaurant
 
 ## Questions
 

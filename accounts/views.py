@@ -20,6 +20,7 @@ def user_setup(request):
             user.set_password(form.cleaned_data['password'])
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
+            new_user_role = form.cleaned_data['role']
 
             # Restrict GM to only creating manager accounts
             if request.user.role == 'gm':
@@ -34,11 +35,23 @@ def user_setup(request):
                     return render(request, 'accounts/user_setup.html', {'form': form})
 
             # Superuser & DM can assign any restaurant
-            elif request.user.role in ['superuser', 'dm']:
+            elif request.user.role == 'superuser':
+                if new_user_role == 'gm' or new_user_role == 'manager':
+                    user.restaurant = form.cleaned_data['restaurant']
+                elif new_user_role == 'dm':
+                    selected_restaurants = form.cleaned_data.get('restaurants')
+                    if selected_restaurants:
+                        user.restaurants.set(selected_restaurants)
+            elif request.user.role == 'dm':
                 user.restaurant = form.cleaned_data['restaurant']
-
-            user.save()
-            messages.success(request, f"User {user.username} created successfully!")
+                
+            try:
+                user.save()
+                messages.success(request, f"User {user.username} created successfully!")
+            except Exception as e:
+                print("Error saving user:", e)
+                messages.error(request, "There was an error creating the user.")
+                return render(request, 'accounts/user_setup.html', {'form': form})
             return redirect('accounts:user_setup')
 
         else:
@@ -130,8 +143,12 @@ def delete_user(request, user_id):
     user = request.user
     target_user = get_object_or_404(User, id=user_id)
 
-    if user.role != 'superuser':
-        raise PermissionDenied  # Only superusers can delete users
+    if user.role == 'superuser':
+       pass
+    # GM: can only delete managers in their restaurant
+    elif user.role == 'gm':
+       if target_user.restaurant != user.restaurant:
+           raise PermissionDenied
 
     if request.method == 'POST':
         target_user.delete()
