@@ -41,6 +41,7 @@ def user_setup(request):
                 elif new_user_role == 'dm':
                     selected_restaurants = form.cleaned_data.get('restaurants')
                     if selected_restaurants:
+                        user.save()
                         user.restaurants.set(selected_restaurants)
             elif request.user.role == 'dm':
                 user.restaurant = form.cleaned_data['restaurant']

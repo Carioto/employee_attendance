@@ -13,6 +13,12 @@ class UserSetupForm(forms.ModelForm):
         required=False,  # Allow None for superusers/DMs, but GMs will get auto-assigned
         widget=forms.Select(attrs={'class': 'fieldstyle w-3/4'})
     )
+    restaurants = forms.ModelMultipleChoiceField(
+        queryset=Restaurant.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'fieldstyle w-3/4', 'id': 'id_restaurants'})
+    )
+
 
     def __init__(self, *args, **kwargs):
         self.request_user = kwargs.pop('user', None)  # Get the logged-in user
@@ -21,6 +27,7 @@ class UserSetupForm(forms.ModelForm):
         if self.request_user and self.request_user.role == 'gm':
             self.fields['role'].choices = [('manager', 'Manager')]  # GM can only create managers
             self.fields['role'].widget.attrs['readonly'] = True  # Make it readonly instead of disabled
+            self.fields['restaurants'].widget = forms.HiddenInput()
 
             # Ensure the GM's restaurant is selected and readonly
             if self.request_user.restaurant:
@@ -30,10 +37,21 @@ class UserSetupForm(forms.ModelForm):
             else:
                 self.fields['restaurant'].queryset = Restaurant.objects.none()
                 self.fields['restaurant'].help_text = "You must have an assigned restaurant to create a manager."
+        elif self.request_user and self.request_user.role == 'dm':
+                # Limit both fields to only show the DM's assigned restaurants
+                allowed = self.request_user.restaurants.all()
+                self.fields['restaurant'].queryset = allowed
+                self.fields['restaurants'].queryset = allowed
+                 # ✅ Only allow DM to create GM or Manager
+                self.fields['role'].choices = [
+                    ('gm', 'General Manager'),
+                    ('manager', 'Manager'),
+                ]
+
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'role', 'restaurant']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'role', 'restaurant','restaurants']
         help_texts = {
             'username': None,
         }

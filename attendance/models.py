@@ -4,12 +4,12 @@ from restaurants.models import Employee
 class AttendanceRecord(models.Model):
     ATTENDANCE_CODES = [
         ('OFF', 'Not Scheduled'),
-        ('NS', 'No call no show'),
-        ('CO', 'Calling Off with Notice'),
-        ('LCO', 'Calling Off Without Notice'),
+        ('NS', 'No Show'),
+        ('CO', 'Called Off With Notice'),
+        ('LCO', 'Called Off Without Notice'),
         ('L', 'Late ( >10 minutes)'),
         ('XL', 'Excessively Late (>30 minutes)'),
-        ('P', 'Present'),
+        ('P', 'On Time'),
         ('HRO', 'Hero')
     ]
 

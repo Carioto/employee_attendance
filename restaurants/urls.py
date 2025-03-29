@@ -6,7 +6,7 @@ from .views import (
     EmployeeDeleteView,
     RestaurantListView,
     RestaurantUpdateView,
-    restaurant_list, assign_gm,
+    assign_gm,
 )
 
 app_name = 'restaurants'
@@ -17,6 +17,6 @@ urlpatterns = [
     path('employees/<int:pk>/edit/', EmployeeUpdateView.as_view(), name='employee_update'),
     path('employees/<int:pk>/delete/', EmployeeDeleteView.as_view(), name='employee_delete'),
     path('<int:pk>/edit/', RestaurantUpdateView.as_view(), name='restaurant_update'),
-    path('restaurants/', restaurant_list, name='restaurant_list'),
+    path('restaurants/', RestaurantListView.as_view(), name='restaurant_list'),
     path('assign-gm/', assign_gm, name='assign_gm'),
 ]

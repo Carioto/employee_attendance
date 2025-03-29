@@ -44,6 +44,8 @@
         {% endfor %}
       </tbody>
     </table>
+    <h3>GMs can only be assigned 1 restaurant.</h3>
+    <h3>A new assignment removes them from current assignment. </h3>
   </div>
 </div>
 <div id="gmModal" class="fixed top-0 right-0 left-0 bottom-0 inset-0 z-50 flex items-center justify-center hidden">
@@ -59,7 +61,7 @@
         <select name="gm_id" id="gmSelect" class="w-full p-2 border rounded text-black">
           <option value="">None</option> <!-- Option for no GM -->
           {% for gm in gms %}
-          <option value="{{ gm.id }}">{{ gm.first_name }} {{ gm.last_name }}</option>
+          <option value="{{ gm.id }}">{{ gm.first_name }} {{ gm.last_name }} {% if gm.restaurant %}(Assigned){% endif %}</option>
           {% endfor %}
         </select>
       </div>

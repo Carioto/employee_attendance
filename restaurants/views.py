@@ -25,7 +25,9 @@ class EmployeeListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         user = self.request.user
         if user.role == 'gm' and user.restaurant:
             return Employee.objects.filter(restaurant=user.restaurant).order_by('first_name')
-        elif user.role in ['dm', 'superuser']:
+        elif user.role == 'dm':
+            return Employee.objects.filter(restaurant__in=user.restaurants.all()).order_by('first_name')
+        elif user.role == 'superuser':
             return Employee.objects.all().order_by('first_name')
         return Employee.objects.none()
 
@@ -96,8 +98,20 @@ class RestaurantListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def test_func(self):
         if self.request.user.role not in ['superuser', 'dm']:
-            raise PermissionDenied  # This explicitly denies access instead of just returning False
+            raise PermissionDenied
         return True
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.role == 'superuser':
+            return Restaurant.objects.all().order_by('name')
+        elif user.role == 'dm':
+            return user.restaurants.all().order_by('name')  # ✅ DMs only see their assigned restaurants
+        return Restaurant.objects.none()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gms'] = CustomUser.objects.filter(role='gm').order_by('first_name')  # ✅ GMs for modal
+        return context
 
 class RestaurantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Restaurant
@@ -111,40 +125,44 @@ class RestaurantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return True
 
 @login_required
-def restaurant_list(request):
-    if request.user.role not in ['superuser', 'dm']:
-        raise PermissionDenied  # Restrict access to unauthorized users
-    restaurants = Restaurant.objects.all().order_by('name')
-    gms = CustomUser.objects.filter(role='gm').order_by('first_name')
-    return render(request, 'restaurants/restaurant_list.html', {'restaurants': restaurants, 'gms': gms})
-
-@login_required
 def assign_gm(request):
     if request.user.role not in ['superuser', 'dm']:
-        raise PermissionDenied  # Prevent unauthorized access
+        raise PermissionDenied
 
     if request.method == 'POST':
         restaurant_id = request.POST.get('restaurant_id')
-        gm_id = request.POST.get('gm_id')  # This can be an empty string if "None" is selected
+        gm_id = request.POST.get('gm_id')
 
         restaurant = get_object_or_404(Restaurant, id=restaurant_id)
 
-        # Remove GM assignment from the previous GM (if any)
-        if restaurant.gm:
-            previous_gm = restaurant.gm
-            previous_gm.restaurant = None
-            previous_gm.save()
-
-        if gm_id:  # If a GM is selected, assign them
-            gm = get_object_or_404(CustomUser, id=gm_id, role='gm')
-            restaurant.gm = gm
-            gm.restaurant = restaurant  # Update GM's restaurant field
-            gm.save()  # Save the updated GM data
-        else:  # If "None" is selected, remove GM assignment
+        # Unassign GM from this restaurant
+        if not gm_id:
+            if restaurant.gm:
+                restaurant.gm.restaurant = None  # Clear GM's reference to this restaurant
+                restaurant.gm.save()
             restaurant.gm = None
+            restaurant.save()
+            return redirect('restaurants:restaurant_list')
 
+        # Assign new GM
+        new_gm = get_object_or_404(CustomUser, id=gm_id, role='gm')
+
+        # Remove GM from any other restaurant
+        existing_restaurant = Restaurant.objects.filter(gm=new_gm).exclude(id=restaurant.id).first()
+        if existing_restaurant:
+            existing_restaurant.gm = None
+            existing_restaurant.save()
+
+        # Update the GM's user record
+        new_gm.restaurant = restaurant
+        new_gm.save()
+
+        # Assign to this restaurant
+        restaurant.gm = new_gm
         restaurant.save()
 
     return redirect('restaurants:restaurant_list')
+
+
 
 

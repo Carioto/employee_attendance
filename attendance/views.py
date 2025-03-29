@@ -5,6 +5,7 @@ from django.forms import formset_factory
 from .forms import AttendanceEntryForm
 from .models import AttendanceRecord
 from restaurants.models import Employee
+from django.core.exceptions import PermissionDenied
 
 import logging
 
@@ -21,7 +22,15 @@ def attendance_entry(request):
     else:
         selected_date = date.today()
 
-    employees = Employee.objects.filter(restaurant=request.user.restaurant).order_by('first_name')
+    if request.user.role in ['gm', 'manager']:
+        employees = Employee.objects.filter(restaurant=request.user.restaurant).order_by('first_name')
+    elif request.user.role == 'dm':
+        employees = Employee.objects.filter(restaurant__in=request.user.restaurants.all()).order_by('first_name')
+    elif request.user.role == 'superuser':
+        employees = Employee.objects.all().order_by('first_name')
+    else:
+        raise PermissionDenied
+
 
     initial_data = []
     for emp in employees:

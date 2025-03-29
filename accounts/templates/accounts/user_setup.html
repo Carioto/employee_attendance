@@ -57,6 +57,13 @@
                 {{ form.restaurant.label_tag }}
                 {{ form.restaurant }}
             </div>
+            <!-- Multi-Restaurant field for DM (Initially hidden) -->
+            <div id="restaurants-wrapper" class="hidden">
+                {{ form.restaurants.label_tag }}
+                {{ form.restaurants }}
+            </div>
+
+        
         </div>
 
         <!-- Password Field -->
@@ -77,4 +84,24 @@
         </button>
     </form>
 </div>
+<script>
+    const roleField = document.getElementById('id_role');
+    const restaurantWrapper = document.getElementById('id_restaurant').parentElement;
+    const restaurantsWrapper = document.getElementById('restaurants-wrapper');
+
+    function toggleRestaurantFields() {
+        const selectedRole = roleField.value;
+        if (selectedRole === 'dm') {
+            restaurantWrapper.classList.add('hidden');
+            restaurantsWrapper.classList.remove('hidden');
+        } else {
+            restaurantWrapper.classList.remove('hidden');
+            restaurantsWrapper.classList.add('hidden');
+        }
+    }
+
+    roleField.addEventListener('change', toggleRestaurantFields);
+    document.addEventListener('DOMContentLoaded', toggleRestaurantFields);  // trigger on load
+</script>
+
 {% endblock %}
