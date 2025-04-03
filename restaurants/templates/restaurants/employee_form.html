@@ -3,8 +3,8 @@
 {% block content %}
 <div class="w-full text-center">
   <h1>{% if object %}Edit Employee{% else %}Add New Employee{% endif %}</h1>
-  <div class="w-1/2 mx-auto">
-    <form class="w-1/2 mx-auto" method="post" >
+  <div class="">
+    <form class="sm:w-1/4 mx-auto" method="post" >
       {% csrf_token %}
       {{ form.as_p }}
       <button class="button" type="submit">Save</button>
