@@ -94,6 +94,10 @@ def edit_user(request, user_id):
     user = request.user
     target_user = get_object_or_404(User, id=user_id)
 
+    if user.username == 'demoGM':
+        messages.info(request, f"Demo user cannot update settings.")
+        return redirect('accounts:manage_users')
+
     # Restrict based on role
     if user.role not in ['superuser', 'dm', 'gm']:
         raise PermissionDenied
@@ -118,6 +122,10 @@ def reset_password(request, user_id):
     user = request.user
     target_user = get_object_or_404(User, id=user_id)
 
+    if user.username == 'demoGM':
+        messages.info(request, f"Demo user cannot update settings.")
+        return redirect('accounts:manage_users')
+    
     # Restrict based on role
     if user.role not in ['superuser', 'dm', 'gm']:
         raise PermissionDenied
@@ -143,6 +151,10 @@ def reset_password(request, user_id):
 def delete_user(request, user_id):
     user = request.user
     target_user = get_object_or_404(User, id=user_id)
+
+    if user.username == 'demoGM':
+        messages.info(request, f"Demo user cannot update settings.")
+        return redirect('accounts:manage_users')
 
     if user.role == 'superuser':
        pass

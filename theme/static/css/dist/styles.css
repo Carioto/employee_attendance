@@ -948,6 +948,10 @@ select {
   min-height: 56px;
 }
 
+.min-h-\[3rem\] {
+  min-height: 3rem;
+}
+
 .w-1\/2 {
   width: 50%;
 }
@@ -1116,6 +1120,11 @@ select {
 .bg-sky-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(14 165 233 / var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 179 8 / var(--tw-bg-opacity, 1));
 }
 
 .p-1 {
@@ -1371,16 +1380,12 @@ select {
     height: 4rem;
   }
 
-  .sm\:w-full {
-    width: 100%;
-  }
-
-  .sm\:w-1\/2 {
-    width: 50%;
-  }
-
   .sm\:w-1\/4 {
     width: 25%;
+  }
+
+  .sm\:w-full {
+    width: 100%;
   }
 
   .sm\:grid-cols-2 {

@@ -1,49 +1,68 @@
 # Employee Attendance Tracker
-![License:MIT](https://img.shields.io/badge/License-MIT-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 
 ## Description
-This project will allow multiple people from multiple facilities track employee attendance in each individual facility.  The design will allow for GMs to create managers for that facility and to manage employees.  All levels have the ability to enter daily compliance, GMs can modify any prior day compliance. Reports are available for all.  A DM feature is planned to allow DMs to create GMs and assign them to any facility the DM has assigned to them.
+**Employee Attendance Tracker** is a Django-based web app designed to allow multiple facilities to track and manage employee attendance and compliance. 
+
+Each facility is assigned a General Manager (GM), who can:
+- Add managers and employees
+- Record daily attendance and compliance data
+- Generate printable reports
+
+The architecture supports scalable roles and permissions. A District Manager (DM) feature is planned for assigning and managing GMs across multiple locations.
+
+---
 
 ## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+- [License](#license)
+- [Tests](#tests)
+- [Questions](#questions)
 
--[Installation](#installation)
-
--[Usage](#usage)
-
--[Credits](#credits)
-
--[License](#license)
-
--[Tests](#tests)
-
--[Questions](#questions)
-
-
+---
 
 ## Installation
 
-This project is available online with no installation required
+No installation is required. The app is available online via Heroku.  
+🔗 [Live App Link](https://your-heroku-app-url.herokuapp.com)
+
+---
 
 ## Usage
 
-Log in with the test GM listed below, use the navigation to add managers for attendance recording, add employees, enter daily attendance records, and view and print various reports.
+1. Log in with the test GM account:
+   - **Username**: `demoGM`
+   - **Password**: `demoPass`
+2. Use the navigation to:
+   - Add managers and employees
+   - Enter and modify attendance records
+   - View and print reports for any date or user level
+
+---
 
 ## License
 
-This software is covered under the following license:
-MIT No Attribution License
-        [View license](https://opensource.org/license/mit-0/)
+This project is covered under the [MIT No Attribution License](https://opensource.org/license/mit-0/).
+
+---
 
 ## Credits
 
-This is a solo project by David Carioto using ChatGPT.
+Solo project by **David Carioto**.  
+AI assistance was used for code generation and troubleshooting via ChatGPT.  
+All final logic, integration, deployment, and debugging was done manually.
+
+---
 
 ## Tests
 
-log in with user 'testGM' and password 'testgmpassword' to use GM functionality of DemoRestaurant
+Demo credentials provided above allow full access to GM functionality for the preloaded **DemoRestaurant**.
+
+---
 
 ## Questions
 
-Contact me by email at dcarioto114@outlook.com
-
-or visit my GitHub repository: [github.com/Carioto](https://github.com/Carioto)
+📧 Email me at [dcarioto114@outlook.com](mailto:dcarioto114@outlook.com)  
+🔗 [My GitHub](https://github.com/Carioto)

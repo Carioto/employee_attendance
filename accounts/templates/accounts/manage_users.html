@@ -4,11 +4,22 @@
 <div class="text-center mx-auto w-3/4">
     <h2 class="text-white text-2xl font-bold text-center mb-4">Manage Users</h2>
 
-    {% if messages %}
-        {% for message in messages %}
-            <p class="bg-green-500 text-white p-2 rounded text-center mb-3">{{ message }}</p>
-        {% endfor %}
-    {% endif %}
+    <div class="min-h-[56px] mb-3 mt-2">
+        {% if messages %}
+          {% for message in messages %}
+            <div
+              class="text-white p-2 rounded text-center
+                     {% if message.tags == 'success' %} bg-green-500
+                     {% elif message.tags == 'error' %} bg-red-500
+                     {% elif message.tags == 'info' %} bg-yellow-500
+                     {% else %} bg-gray-500
+                     {% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      
   <div class="overflow-x-auto">
     <table class="w-full text-sm sm:text-base">
         <thead>
