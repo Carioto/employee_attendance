@@ -74,7 +74,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         if user.role == "gm" and user.restaurant:
             if employee.restaurant != user.restaurant:
-                raise PermissionDenied  # GM can only edit employees from their restaurant
+                raise PermissionDenied
         elif user.role not in ["dm", "superuser"]:
             raise PermissionDenied  # Only GM, DM, or Superuser can edit
 
@@ -92,7 +92,7 @@ class EmployeeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
         if user.role == "gm" and user.restaurant:
             if employee.restaurant != user.restaurant:
-                raise PermissionDenied  # GM can only delete employees from their restaurant
+                raise PermissionDenied
         elif user.role not in ["dm", "superuser"]:
             raise PermissionDenied  # Only GM, DM, or Superuser can delete
 
@@ -135,7 +135,7 @@ class RestaurantUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         if self.request.user.role not in ["superuser", "dm"]:
-            raise PermissionDenied  # This explicitly denies access instead of just returning False
+            raise PermissionDenied
         return True
 
 

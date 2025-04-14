@@ -9,6 +9,7 @@ from .views import (
     assign_gm,
 )
 
+
 app_name = "restaurants"
 
 urlpatterns = [
