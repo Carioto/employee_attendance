@@ -9,7 +9,7 @@ class UserSetupForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                "class": "block border mt-3 mb-3 border-gray-300 p-2 rounded-md w-1/4 mx-auto text-center"
+                "class": "block border mt-3 mb-3 border-gray-300 p-2 rounded-md w-1/4 mx-auto text-center"  # noqa: E501
             }
         )
     )
