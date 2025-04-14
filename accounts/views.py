@@ -83,7 +83,7 @@ def manage_users(request):
     # GMs can see only their restaurant users
     elif user.role == "gm":
         # Block GMs with no assigned restaurant
-        if user.restaurant == None:
+        if user.restaurant is None:
             messages.error(
                 request, "You must be assigned to a restaurant to manage users."
             )
@@ -102,7 +102,7 @@ def edit_user(request, user_id):
     target_user = get_object_or_404(User, id=user_id)
 
     if user.username == "demoGM":
-        messages.info(request, f"Demo user cannot update settings.")
+        messages.info(request, "Demo user cannot update settings.")
         return redirect("accounts:manage_users")
 
     # Restrict based on role
@@ -133,7 +133,7 @@ def reset_password(request, user_id):
     target_user = get_object_or_404(User, id=user_id)
 
     if user.username == "demoGM":
-        messages.info(request, f"Demo user cannot update settings.")
+        messages.info(request, "Demo user cannot update settings.")
         return redirect("accounts:manage_users")
 
     # Restrict based on role
@@ -170,7 +170,7 @@ def delete_user(request, user_id):
     target_user = get_object_or_404(User, id=user_id)
 
     if user.username == "demoGM":
-        messages.info(request, f"Demo user cannot update settings.")
+        messages.info(request, "Demo user cannot update settings.")
         return redirect("accounts:manage_users")
 
     if user.role == "superuser":
