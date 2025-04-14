@@ -1,17 +1,19 @@
 from django.db import models
 
+
 class Restaurant(models.Model):
+    # Since we reference a class, the __init__ is controed by Django
     name = models.CharField(max_length=255)
     storeid = models.CharField(max_length=8)
     address = models.CharField(max_length=255, blank=True, null=True)
     # Field for the assigned GM (optional)
     gm = models.ForeignKey(
-        'accounts.CustomUser',
+        "accounts.CustomUser",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        limit_choices_to={'role': 'gm'},
-        related_name='managed_restaurant'
+        limit_choices_to={"role": "gm"},
+        related_name="managed_restaurant",
     )
 
     def __str__(self):
@@ -19,7 +21,9 @@ class Restaurant(models.Model):
 
 
 class Employee(models.Model):
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='employees')
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.CASCADE, related_name="employees"
+    )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     # Optionally, add additional fields like contact info, position, etc.
