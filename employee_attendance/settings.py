@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-z+3ev72$ng^&-_@@%$dn^nfx4a2f4$ql99cbulb3o*ick-=!37"
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-dev-key")
 
 
 ALLOWED_HOSTS = ["emp-attendance-d47a9af5aa54.herokuapp.com", "localhost", "127.0.0.1"]
@@ -109,7 +109,10 @@ DEBUG = "True"  # Heroku debug is set to false
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator",
+        ),
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
