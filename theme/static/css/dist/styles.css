@@ -948,10 +948,6 @@ select {
   min-height: 56px;
 }
 
-.min-h-\[3rem\] {
-  min-height: 3rem;
-}
-
 .w-1\/2 {
   width: 50%;
 }

@@ -17,6 +17,12 @@ main{
     display: flex;
     align-items: center; 
 }
+#user{order:1}
+#empl{order:3}
+#rest{order:2}
+#att{order:4}
+#repo{order:5}
+#logo{order:6}
 
 h1{
     margin-left: auto;

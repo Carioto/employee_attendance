@@ -17,33 +17,41 @@
     <nav class="p-4 sm:relative sm:flex  ">
       <!-- Desktop Navigation -->
       <div class="hidden sm:flex sm:h-16 sm:w-full space-x-4 bg-gray-900 sm:justify-center sm:items-center">
-          {% if user.is_authenticated %}
-              {% if user.role == 'superuser' or user.role == 'dm' %}
-                  <a href="{% url 'accounts:user_setup' %}" class="nav-link">User Setup</a>
-                  <a href="{% url 'restaurants:restaurant_list' %}" class="nav-link">Restaurants</a>
-                  <a href="{% url 'attendance:record_entry' %}" class="nav-link">Attendance</a>
-                  <a href="{% url 'restaurants:employee_list' %}" class="nav-link">Employees</a>
-                  <a href="{% url 'reports:reports_home' %}" class="nav-link">Reports</a>
-              {% elif user.role == 'gm' %}
-                  <a href="{% url 'accounts:user_setup' %}" class="nav-link">User Setup</a>
-                  <a href="{% url 'attendance:record_entry' %}" class="nav-link">Attendance</a>
-                  <a href="{% url 'restaurants:employee_list' %}" class="nav-link">Employees</a>
-                  <a href="{% url 'reports:reports_home' %}" class="nav-link">Reports</a>
-              {% elif user.role == 'manager' %}
-                  <a href="{% url 'attendance:record_entry' %}" class="nav-link">Attendance</a>
-                  <a href="{% url 'reports:reports_home' %}" class="nav-link">Reports</a>
-              {% endif %}
-              <form action="{% url 'logout' %}" method="post" class="inline">
-                  {% csrf_token %}
-                  <button type="submit" class="nav-link">Logout</button>
-              </form>
-          {% else %}
-              <a href="{% url 'login' %}" class="nav-link hidden">Login</a>
+        {% if user.is_authenticated %}
+        
+          <!-- Base links for all authenticated users -->
+          {% if user.role == 'manager' or user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
+            <a href="{% url 'attendance:record_entry' %}" id="att" aria-label="Attendance" class="nav-link">Attendance</a>
+            <a href="{% url 'reports:reports_home' %}" id="repo" aria-label="Reports" class="nav-link">Reports</a>
           {% endif %}
-          {% if user.is_authenticated %}
-          <span class="absolute right-10 text-sm font-medium text-gray-300 hidden lg:block">logged in as {{ user.first_name }} {{user.last_name}}</span>
+      
+          <!-- Extra for GM and above -->
+          {% if user.role == 'gm' or user.role == 'dm' or user.role == 'superuser' %}
+            <a href="{% url 'accounts:user_setup' %}" id="user" aria-label="User Setup" class="nav-link">User Setup</a>
+            <a href="{% url 'restaurants:employee_list' %}" id="empl" aria-label="Employees" class="nav-link">Employees</a>
           {% endif %}
+      
+          <!-- Only DM or Super -->
+          {% if user.role == 'dm' or user.role == 'superuser' %}
+            <a href="{% url 'restaurants:restaurant_list' %}" id="rest" aria-label="Restaurants" class="nav-link">Restaurants</a>
+          {% endif %}
+      
+          <!-- Logout -->
+          <form action="{% url 'logout' %}" method="post" id="logo" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="nav-link">Logout</button>
+          </form>
+      
+          <!-- Logged-in status -->
+          <span class="absolute right-10 text-sm font-medium text-gray-300 hidden lg:block">
+            logged in as {{ user.first_name }} {{ user.last_name }}
+          </span>
+      
+        {% else %}
+          <a href="{% url 'login' %}" class="nav-link hidden">Login</a>
+        {% endif %}
       </div>
+      
   
       <!-- Mobile Bottom Navigation -->
       <div class="fixed bottom-0 left-0 w-full bg-gray-900 p-2 flex justify-around items-center sm:hidden">
@@ -96,5 +104,5 @@
       </div>
     </footer>
 </body>
-<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/script.js' %}" defer></script>
 </html>
